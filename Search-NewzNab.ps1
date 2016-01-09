@@ -2,7 +2,7 @@
 
 function Search-Newznab
     {
-    [OutputType([Object])]
+    [OutputType([array])]
     Param
         (
         # API URL of NewzNab
@@ -22,6 +22,21 @@ function Search-Newznab
 
     $searchURL = $NewzNabURL+"&q=$($encodedSearchString)"
     $searchResults = Invoke-RestMethod $searchURL
-    return  $searchResults 
+
+    # Clean up the metadata and create a new array
+    $cleanResults = @()
+    foreach($searchResult in $searchResults)
+        {
+        $cleanObject = New-Object System.Object
+        $cleanObject | Add-Member -type NoteProperty -name title -Value $searchResult.title      
+        $cleanObject | Add-Member -type NoteProperty -name link -Value $searchResult.link       
+        $cleanObject | Add-Member -type NoteProperty -name pubDate -Value $searchResult.pubDate  
+        $cleanObject | Add-Member -type NoteProperty -name category -Value $searchResult.category 
+        $cleanObject | Add-Member -type NoteProperty -name Description -Value $searchResult.description
+        $cleanObject | Add-Member -type NoteProperty -name FriendlySize -Value ("{0:N2}" -f (($($searchResult).attr[2].value)/1Mb))
+        $cleanResults += $cleanObject  
+        }
+
+    return $cleanResults
     }
 
