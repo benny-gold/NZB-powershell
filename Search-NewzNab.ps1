@@ -12,7 +12,7 @@ function Search-Newznab
         [String]$APIKey,
     
         #String to search for
-
+        [Parameter(Mandatory=$True)]
         [string]$searchString
         )
     

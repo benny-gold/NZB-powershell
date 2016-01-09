@@ -1,6 +1,4 @@
-﻿# Module for newznab searching and downloading
-
-function Send-Download
+﻿function Send-Download
     {
     [OutputType([bool])]
     Param
@@ -26,6 +24,6 @@ function Send-Download
 
         )
     
-    
+    Write-Verbose -Message "Sending $NZBURL to $SabNZBdplus/$sabCategory"
     }
 
