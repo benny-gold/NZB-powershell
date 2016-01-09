@@ -32,8 +32,9 @@ if($NZBResults -ne $null)
             }
         catch
             {
-            New-PushalotNotification -AuthorizationToken $PushAuthToken -Title "New result for $searchString failed to download!" -Body "$searchString has been found but the download failed. /n$($NZBResults[0].name)" -IsImportant 
+            New-PushalotNotification -AuthorizationToken $PushAuthToken -Title "New result for $searchString failed to download!" -Body "$searchString has been found but the download failed. `n$($NZBResults.name)" -IsImportant $True
             }
+        }
     else
         {
         Write-Verbose "Item already Snatched"
