@@ -1,4 +1,4 @@
-﻿# Module for newznab searching and downloading
+﻿# Functions for searching and downloading from NewzNab indexers (actually written for GeekSeek, but should work)
 
 function Search-Newznab
     {
@@ -16,6 +16,12 @@ function Search-Newznab
         [string]$searchString
         )
     
-    
+    Write-Verbose "Searching $NewzNab for `"$searchString`""
+    $NewzNabURL = $NewzNab+"api?t=search&apikey=$APIKey"
+    $encodedSearchString = [System.Web.HttpUtility]::UrlEncode($searchString)
+
+    $searchURL = $NewzNabURL+"&q=$($encodedSearchString)"
+    $searchResults = Invoke-RestMethod $searchURL
+    return  $searchResults 
     }
 
