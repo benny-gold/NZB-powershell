@@ -13,7 +13,10 @@ function Search-Newznab
     
         #String to search for
         [Parameter(Mandatory=$True)]
-        [string]$searchString
+        [string]$searchString,
+
+        # amount of days of retention you have
+        [int]$retentionDays=2000
         )
     
     Write-Verbose "Searching $NewzNab for `"$searchString`""
@@ -21,10 +24,13 @@ function Search-Newznab
     $encodedSearchString = [System.Web.HttpUtility]::UrlEncode($searchString)
 
     $searchURL = $NewzNabURL+"&q=$($encodedSearchString)"
-    $searchResults = Invoke-RestMethod $searchURL
+    $searchResults = Invoke-RestMethod $searchURL 
+
+
 
     # Clean up the metadata and create a new array
     $cleanResults = @()
+
     foreach($searchResult in $searchResults)
         {
         $cleanObject = New-Object System.Object
