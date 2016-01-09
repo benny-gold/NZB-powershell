@@ -26,7 +26,6 @@
     Write-Verbose -Message "Sending $NZBURL to $SabNZBdplus/$sabCategory"
   
 
-    $sabCategory = "music"
     $sabAddDownload = $SabNZBdplus+"/api?mode=addurl&name=$([System.Web.HttpUtility]::UrlEncode($NZBURL))&cat=$($sabCategory)&output=JSON&apikey=$($APIKey)"
     Write-Verbose -Message $sabAddDownload
     Invoke-RestMethod -Uri $sabAddDownload
