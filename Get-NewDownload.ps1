@@ -23,21 +23,25 @@ $VerbosePreference = "Continue"
 $NZBResults = Search-Newznab -searchString $searchString
 if($NZBResults -ne $null)
     {
-    try
+    if((Get-SabNZBdHistory -SabNZBdplus $sabUrl -APIKey $sabKey -NZBId $testNZB) -eq $false)        
         {
-        Get-SabNZBdHistory 
+        Write-Verbose "Item not snatched..."
+        try
+            {
+            $downloadAdd = Send-Download -SabNZBdplus $sabUrl -APIKey $sabKey -sabCategory music -NZBURL $testNZB
+            }
+        catch
+            {
+            New-PushalotNotification -AuthorizationToken $PushAuthToken -Title "New result for $searchString failed to download!" -Body "$searchString has been found but the download failed. /n$($NZBResults[0].name)" -IsImportant 
+            }
+    else
+        {
+        Write-Verbose "Item already Snatched"
         }
-    catch
-        {
-        $downloadIsSnatched = Send-Download -SabNZBdplus $sabUrl -APIKey $sabKey -sabCategory music -NZBURL $testNZB
-            if($downloadIsSnatched -eq $true)
-                {
-                New-PushalotNotification -AuthorizationToken $PushAuthToken -Title "New result for $searchString Snatched" -Body "$searchString has been snatched/n$($results[0].name)"  
-                }
-            else
-                {
-                New-PushalotNotification -AuthorizationToken $PushAuthToken -Title "New result for $searchString failed!" -Body "$searchString has been found but the download failed. /n$($results[0].name)" -IsImportant 
-                }
+
+            New-PushalotNotification -AuthorizationToken $PushAuthToken -Title "New result for $searchString Snatched" -Body "$searchString has been snatched/n$($NZBResults[0].name)"  
+         
+                
         }
     }
 
