@@ -19,14 +19,19 @@ function Search-Newznab
         [int]$retentionDays=2000
         )
     
+
     Write-Verbose "Searching $NewzNab for `"$searchString`""
     $NewzNabURL = $NewzNab+"api?t=search&apikey=$APIKey"
+
+    Add-Type -AssemblyName System.Web
     $encodedSearchString = [System.Web.HttpUtility]::UrlEncode($searchString)
 
     $searchURL = $NewzNabURL+"&q=$($encodedSearchString)"
+
+    Write-Verbose "SearcURL = $searchURL"
     $searchResults = Invoke-RestMethod $searchURL 
 
-
+  
 
     # Clean up the metadata and create a new array
     $cleanResults = @()
@@ -36,13 +41,14 @@ function Search-Newznab
         $cleanObject = New-Object System.Object
         $cleanObject | Add-Member -type NoteProperty -name title -Value $searchResult.title      
         $cleanObject | Add-Member -type NoteProperty -name link -Value $searchResult.link       
-        $cleanObject | Add-Member -type NoteProperty -name pubDate -Value $searchResult.pubDate  
+        $cleanObject | Add-Member -type NoteProperty -name pubDate -Value $([DateTime]::Parse($searchResult.pubDate))
         $cleanObject | Add-Member -type NoteProperty -name category -Value $searchResult.category 
         $cleanObject | Add-Member -type NoteProperty -name Description -Value $searchResult.description
         $cleanObject | Add-Member -type NoteProperty -name FriendlySize -Value ("{0:N2}" -f (($($searchResult).attr[2].value)/1Mb))
         $cleanResults += $cleanObject  
         }
 
+    $cleanResults = ($cleanResults | Where-Object {$_.pubDate -gt ((Get-Date).AddDays("-$retentionDays"))})
     return $cleanResults
     }
 
