@@ -15,6 +15,11 @@
         [Parameter(Mandatory=$True)]
         [string]
         $NZBURL,
+                
+        # Friendly Name of NZB
+        [Parameter(Mandatory=$false)]
+        [string]
+        $NZBTitle,
 
         # Category to place download in
         [Parameter(Mandatory=$True)]
@@ -26,7 +31,7 @@
     Write-Verbose -Message "Sending $NZBURL to $SabNZBdplus/$sabCategory"
   
 
-    $sabAddDownload = $SabNZBdplus+"/api?mode=addurl&name=$([System.Web.HttpUtility]::UrlEncode($NZBURL))&cat=$($sabCategory)&output=JSON&apikey=$($APIKey)"
+    $sabAddDownload = $SabNZBdplus+"/api?mode=addurl&name=$([System.Web.HttpUtility]::UrlEncode($NZBURL))&cat=$($sabCategory)&output=JSON&apikey=$($APIKey)&nzbname=$($NZBTitle)"
     Write-Verbose -Message $sabAddDownload
     Invoke-RestMethod -Uri $sabAddDownload
 
