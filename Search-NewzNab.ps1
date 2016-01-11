@@ -55,7 +55,7 @@ function Search-Newznab
         # IMDB id of the item being queried e.g. 0058935    
         [parameter(Mandatory=$false,ParameterSetName = "Movie")] 
         [int]
-        $imdbid,
+        $IMDBId,
         
         # Params for Music
         # Artist name (URL/UTF-8 encoded). Case insensitive   
@@ -91,19 +91,19 @@ function Search-Newznab
 
         # Params for Books
         
-        # Book title (URL/UTF-8 encoded). Case insensitive    
         [parameter(Mandatory=$false, ParameterSetName = "Book")] 
         [switch]
         $Book,
 
+        # Book title (URL/UTF-8 encoded). Case insensitive    
         [parameter(Mandatory=$false, ParameterSetName = "Book")] 
         [string]
-        $q,
+        $BookTitle,
         
         # Author name (URL/UTF-8 encoded). Case insensitive   
         [parameter(Mandatory=$false, ParameterSetName = "Book")] 
         [string]
-        $author 
+        $Author 
 
         )
     
@@ -122,39 +122,75 @@ switch ($psCmdlet.ParameterSetName)
     {
     "Book"
         {
-        $searchURL = $searchURL+"&t=book"
+        $searchURL += "&t=book"
+        if($BookTitle -ne $null)
+            {
+            $searchURL += "&q=$($BookTitle)"
+            }
+        if($Author -ne $null)
+            {
+            $searchURL += "&ep=$($Author)"
+            }
         }
     "Movie"
         {
-        $searchURL = $searchURL+"&t=movie"
+        $searchURL += "&t=movie"
+        if($imdbid -ne $null)
+            {
+            $searchURL += "&imdbid=$($imdbid)"
+            }
+        if($Genre-ne $null)
+            {
+            $searchURL += "&genre=$($Genre)"
+            }
         }
     "Music"
         {
-        $searchURL = $searchURL+"&t=music"
+        $searchURL += "&t=music"
+        if($Artist -ne $null)
+            {
+            $searchURL += "&artist=$($Artist)"
+            }
+        if($Album -ne $null)
+            {
+            $searchURL += "&album=$($Album)"
+            }
+        if($Label -ne $null)
+            {
+            $searchURL += "&label=$($Label)"
+            }
+        if($Year -ne $null)
+            {
+            $searchURL += "&year=$($Year)"
+            }
+        if($Genre-ne $null)
+            {
+            $searchURL += "&genre=$($Genre)"
+            }
         }
     "TV"
         {
         $searchURL += "&t=tvsearch"
         if($Season -ne $null)
-          {
-          $searchURL += "&season=$($Season)"
-          }
+            {
+            $searchURL += "&season=$($Season)"
+            }
         if($Episode -ne $null)
-          {
-          $searchURL += "&ep=$($Episode)"
-          }
+            {
+            $searchURL += "&ep=$($Episode)"
+            }
         if($TVRageId -ne $null)
-          {
-          $searchURL += "&rid=$($TVRageId)"
-          }
+            {
+            $searchURL += "&rid=$($TVRageId)"
+            }
         if($TVDBId -ne $null)
-          {
-          $searchURL += "&tvdbid=$($TVDBId)"
-          }
+            {
+            $searchURL += "&tvdbid=$($TVDBId)"
+            }
         }
     "General"
         {
-        $searchURL = $searchURL+"&t=search"
+        $searchURL += "&t=search"
         }
     }
 
