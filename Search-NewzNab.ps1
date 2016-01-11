@@ -28,7 +28,7 @@ function Search-Newznab
 
     $searchURL = $NewzNabURL+"&q=$($encodedSearchString)"
 
-    Write-Verbose "SearcURL = $searchURL"
+    Write-Verbose "SearchURL = $searchURL"
     $searchResults = Invoke-RestMethod $searchURL 
 
   
@@ -39,6 +39,7 @@ function Search-Newznab
     foreach($searchResult in $searchResults)
         {
         $cleanObject = New-Object System.Object
+        $cleanObject | Add-Member -type NoteProperty -name Index -Value $searchResults.indexOf($searchResult)
         $cleanObject | Add-Member -type NoteProperty -name title -Value $searchResult.title      
         $cleanObject | Add-Member -type NoteProperty -name link -Value $searchResult.link       
         $cleanObject | Add-Member -type NoteProperty -name pubDate -Value $([DateTime]::Parse($searchResult.pubDate))
