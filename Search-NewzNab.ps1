@@ -95,11 +95,6 @@ function Search-Newznab
         [switch]
         $Book,
 
-        # Book title (URL/UTF-8 encoded). Case insensitive    
-        [parameter(Mandatory=$false, ParameterSetName = "Book")] 
-        [string]
-        $BookTitle,
-        
         # Author name (URL/UTF-8 encoded). Case insensitive   
         [parameter(Mandatory=$false, ParameterSetName = "Book")] 
         [string]
@@ -122,82 +117,90 @@ switch ($psCmdlet.ParameterSetName)
     {
     "Book"
         {
+        Write-Verbose "Setting Book Search"
         $searchURL += "&t=book"
-        if($BookTitle -ne $null)
-            {
-            $searchURL += "&q=$($BookTitle)"
-            }
         if($Author -ne $null)
             {
+            Write-Verbose "Adding Author"
             $searchURL += "&ep=$($Author)"
             }
         }
     "Movie"
         {
+        Write-Verbose "Setting Movie Search"
         $searchURL += "&t=movie"
         if($imdbid -ne $null)
             {
+            Write-Verbose "Adding IMDB ID"
             $searchURL += "&imdbid=$($imdbid)"
             }
         if($Genre-ne $null)
             {
+            Write-Verbose "Adding Genre"
             $searchURL += "&genre=$($Genre)"
             }
         }
     "Music"
         {
+        Write-Verbose "Setting Music Search"
         $searchURL += "&t=music"
         if($Artist -ne $null)
             {
+            Write-Verbose "Adding Artist"
             $searchURL += "&artist=$($Artist)"
             }
         if($Album -ne $null)
             {
+            Write-Verbose "Adding Album"
             $searchURL += "&album=$($Album)"
             }
         if($Label -ne $null)
             {
+            Write-Verbose "Adding Label"
             $searchURL += "&label=$($Label)"
             }
         if($Year -ne $null)
             {
+            Write-Verbose "Adding Year"
             $searchURL += "&year=$($Year)"
             }
         if($Genre-ne $null)
             {
+            Write-Verbose "Adding Genre"
             $searchURL += "&genre=$($Genre)"
             }
         }
     "TV"
         {
+        Write-Verbose "Setting TV Search"
         $searchURL += "&t=tvsearch"
         if($Season -ne $null)
             {
+            Write-Verbose "Adding Season"
             $searchURL += "&season=$($Season)"
             }
         if($Episode -ne $null)
             {
+            Write-Verbose "Adding Episode"
             $searchURL += "&ep=$($Episode)"
             }
         if($TVRageId -ne $null)
             {
+            Write-Verbose "Adding TVRageID"
             $searchURL += "&rid=$($TVRageId)"
             }
         if($TVDBId -ne $null)
             {
+            Write-Verbose "Adding TVDBID"
             $searchURL += "&tvdbid=$($TVDBId)"
             }
         }
     "General"
         {
+        Write-Verbose "Setting General Search"
         $searchURL += "&t=search"
         }
     }
-
- 
-
-
-
 
 
 
