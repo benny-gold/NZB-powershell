@@ -2,6 +2,7 @@
 
 function Search-Newznab
     {
+    [CmdletBinding(DefaultParameterSetName="General")] 
     [OutputType([array])]
     Param
         (
@@ -21,30 +22,29 @@ function Search-Newznab
         # amount of days of retention you have
         [int]
         $retentionDays=2000,
-
+        
         # Params for TV Episodes
         [parameter(Mandatory=$false,ParameterSetName = "TV")] 
         [switch]$TV,
-        
-        
+                
         # Season string, e.g S13 or 13 for the item being queried - forcing an int for simplicity
         [parameter(Mandatory=$false,ParameterSetName = "TV")] 
         [int]
-        $season,
+        $Season,
            
         # Episode string, e.g E13 or 13 for the item being queried - forcing an int for simplicity
         [parameter(Mandatory=$false,ParameterSetName = "TV")] 
         [int]
-        $ep,
+        $Episode,
             
         # TVRage id of the item being queried   
         [parameter(Mandatory=$false,ParameterSetName = "TV")] 
-        $rid, 
+        $TVRageId, 
         
         
         #TVDB id of the item being queried   
         [parameter(Mandatory=$false,ParameterSetName = "TV")] 
-        $tvdbid, 
+        $TVDBId, 
             
         
         # Params for Movies
@@ -109,7 +109,7 @@ function Search-Newznab
     
 
     Write-Verbose "Searching $NewzNab for `"$searchString`""
-    $NewzNabURL = $NewzNab+"api?t=search&apikey=$APIKey"
+    $NewzNabURL = $NewzNab+"api?apikey=$APIKey"
 
 
 
@@ -118,8 +118,47 @@ function Search-Newznab
     $encodedSearchString = [System.Web.HttpUtility]::UrlEncode($searchString)
     $searchURL = $NewzNabURL+"&q=$($encodedSearchString)"
 
+switch ($psCmdlet.ParameterSetName) 
+    {
+    "Book"
+        {
+        $searchURL = $searchURL+"&t=book"
+        }
+    "Movie"
+        {
+        $searchURL = $searchURL+"&t=movie"
+        }
+    "Music"
+        {
+        $searchURL = $searchURL+"&t=music"
+        }
+    "TV"
+        {
+        $searchURL += "&t=tvsearch"
+        if($Season -ne $null)
+          {
+          $searchURL += "&season=$($Season)"
+          }
+        if($Episode -ne $null)
+          {
+          $searchURL += "&ep=$($Episode)"
+          }
+        if($TVRageId -ne $null)
+          {
+          $searchURL += "&rid=$($TVRageId)"
+          }
+        if($TVDBId -ne $null)
+          {
+          $searchURL += "&tvdbid=$($TVDBId)"
+          }
+        }
+    "General"
+        {
+        $searchURL = $searchURL+"&t=search"
+        }
+    }
 
-    if($
+ 
 
 
 
