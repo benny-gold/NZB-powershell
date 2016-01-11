@@ -6,27 +6,126 @@ function Search-Newznab
     Param
         (
         # API URL of NewzNab
-        [String]$NewzNab,
+        [String]
+        $NewzNab,
 
         # API key of NewzNab
-        [String]$APIKey,
+        [String]
+        $APIKey,
     
         #String to search for
         [Parameter(Mandatory=$True)]
-        [string]$searchString,
+        [string]
+        $searchString,
 
         # amount of days of retention you have
-        [int]$retentionDays=2000
+        [int]
+        $retentionDays=2000,
+
+        # Params for TV Episodes
+        [parameter(Mandatory=$false,ParameterSetName = "TV")] 
+        [switch]$TV,
+        
+        
+        # Season string, e.g S13 or 13 for the item being queried - forcing an int for simplicity
+        [parameter(Mandatory=$false,ParameterSetName = "TV")] 
+        [int]
+        $season,
+           
+        # Episode string, e.g E13 or 13 for the item being queried - forcing an int for simplicity
+        [parameter(Mandatory=$false,ParameterSetName = "TV")] 
+        [int]
+        $ep,
+            
+        # TVRage id of the item being queried   
+        [parameter(Mandatory=$false,ParameterSetName = "TV")] 
+        $rid, 
+        
+        
+        #TVDB id of the item being queried   
+        [parameter(Mandatory=$false,ParameterSetName = "TV")] 
+        $tvdbid, 
+            
+        
+        # Params for Movies
+        [parameter(Mandatory=$false,ParameterSetName = "Movie")] 
+        [switch]
+        $Movie,
+
+        # IMDB id of the item being queried e.g. 0058935    
+        [parameter(Mandatory=$false,ParameterSetName = "Movie")] 
+        [int]
+        $imdbid,
+        
+        # Params for Music
+        # Artist name (URL/UTF-8 encoded). Case insensitive   
+        [parameter(Mandatory=$false, ParameterSetName = "Music")] 
+        [switch]
+        $Music,
+
+        [parameter(Mandatory=$false, ParameterSetName = "Music")] 
+        [string]
+        $Artist,
+         
+        # Album title (URL/UTF-8 encoded). Case insensitive    
+        [parameter(Mandatory=$false, ParameterSetName = "Music")] 
+        [string]
+        $Album,
+
+        # Publisher/Label name (URL/UTF-8 encoded). Case insensitive    
+        [parameter(Mandatory=$false, ParameterSetName = "Music")] 
+        [string]
+        $Label,
+        
+        #Four digit year of release    
+        [parameter(Mandatory=$false, ParameterSetName = "Music")] 
+        [ValidateRange(1000,2525)] 
+        [int]
+        $Year,
+
+        # Genre of Release 
+        [parameter(Mandatory=$false, ParameterSetName = "Movie")] 
+        [parameter(ParameterSetName = "Music")]
+        [string]
+        $Genre,
+
+        # Params for Books
+        
+        # Book title (URL/UTF-8 encoded). Case insensitive    
+        [parameter(Mandatory=$false, ParameterSetName = "Book")] 
+        [switch]
+        $Book,
+
+        [parameter(Mandatory=$false, ParameterSetName = "Book")] 
+        [string]
+        $q,
+        
+        # Author name (URL/UTF-8 encoded). Case insensitive   
+        [parameter(Mandatory=$false, ParameterSetName = "Book")] 
+        [string]
+        $author 
+
         )
     
 
     Write-Verbose "Searching $NewzNab for `"$searchString`""
     $NewzNabURL = $NewzNab+"api?t=search&apikey=$APIKey"
 
+
+
+    # Build out query string
     Add-Type -AssemblyName System.Web
     $encodedSearchString = [System.Web.HttpUtility]::UrlEncode($searchString)
-
     $searchURL = $NewzNabURL+"&q=$($encodedSearchString)"
+
+
+    if($
+
+
+
+
+
+
 
     Write-Verbose "SearchURL = $searchURL"
     $searchResults = Invoke-RestMethod $searchURL 
