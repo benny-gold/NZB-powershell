@@ -119,7 +119,7 @@ switch ($psCmdlet.ParameterSetName)
         {
         Write-Verbose "Setting Book Search"
         $searchURL += "&t=book"
-        if($Author -ne $null)
+        if($Author -ne "")
             {
             Write-Verbose "Adding Author"
             $searchURL += "&ep=$($Author)"
@@ -134,7 +134,7 @@ switch ($psCmdlet.ParameterSetName)
             Write-Verbose "Adding IMDB ID"
             $searchURL += "&imdbid=$($imdbid)"
             }
-        if($Genre-ne $null)
+        if($Genre-ne "")
             {
             Write-Verbose "Adding Genre"
             $searchURL += "&genre=$($Genre)"
@@ -144,28 +144,28 @@ switch ($psCmdlet.ParameterSetName)
         {
         Write-Verbose "Setting Music Search"
         $searchURL += "&t=music"
-        if($Artist -ne $null)
+        if($Artist -ne "")
             {
-            Write-Verbose "Adding Artist"
+            Write-Verbose "Adding Artist:`n$($Artist.GetType())"
             $searchURL += "&artist=$($Artist)"
             }
-        if($Album -ne $null)
+        if($Album -ne "")
             {
             Write-Verbose "Adding Album"
             $searchURL += "&album=$($Album)"
             }
-        if($Label -ne $null)
+        if($Label -ne "")
             {
             Write-Verbose "Adding Label"
             $searchURL += "&label=$($Label)"
             }
-        if($Year -ne $null)
+        if($Year -ne "")
             {
             Write-Verbose "Adding Year"
             $searchURL += "&year=$($Year)"
             }
-        if($Genre-ne $null)
-            {
+        if($Genre-ne "")
+            { 
             Write-Verbose "Adding Genre"
             $searchURL += "&genre=$($Genre)"
             }
