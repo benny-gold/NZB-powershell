@@ -18,6 +18,7 @@ Function Set-SabCategory
 $sabcats = @{}
 foreach ($category in $capabilities.caps.categories.category.subcat)
     {
+    $Parsed = "$($category.description) > $($category.name)"
     $Parsed
     $LocalCat = Set-SabCategory
     $sabcats.Add($parsed,$LocalCat)

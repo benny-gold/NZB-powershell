@@ -39,9 +39,8 @@ Function Get-NewDownload
     else 
         {
         $number = 0
-        InlineScript{
-            $NZBResults | ft index,friendlySize,Title,pubDate
-            }
+        $NZBResults | ft index,friendlySize,Title,pubDate
+        
         $switch = 'switch($userSelectedDownload){'
         Foreach ($Download in $NZBResults)
     	    {
@@ -49,20 +48,20 @@ Function Get-NewDownload
             $switch += "`n`t $($NZBResults.IndexOf($Download)) {`$SelectedDownload = `$NZBResults[$($NZBResults.IndexOf($Download))]}"
             }
         $switch += "`n}"
-        InlineScript{
-            [int]$userSelectedDownload = Read-Host "Which Item do you want to download?"
-            }
+        [int]$userSelectedDownload = Read-Host "Which Item do you want to download?"
+            
         invoke-expression $switch
         }
 
+    Write-Verbose ($SelectedDownload | ConvertTo-Json)
 
     # Figure out category
 
     $categories = Get-Content "$PSScriptRoot\Helpers\SabCategories.json" | ConvertFrom-Json
     if($categories.($SelectedDownload.Category))
         {
-        Write-Verbose "Setting $($categories.($SelectedDownload.Category))"
-        $sabCategory += "{0}" -f $categoriess.($SelectedDownload.Category)
+        Write-Verbose "Setting Category to $($categories.($SelectedDownload.Category))"
+        $sabCategory += "{0}" -f $categories.($SelectedDownload.Category)
         }
     else
         {
@@ -72,30 +71,33 @@ Function Get-NewDownload
 
     #Check in history
 
-    if($SelectedDownload -ne $null)
+    if($SelectedDownload -ne $null -and $SelectedDownload.FriendlySize -lt 400)
         {
         if((Get-SabNZBdHistory -SabNZBdplus $sabUrl -APIKey $sabKey -NZBId $($SelectedDownload.link)) -eq $false)        
             {
             Write-Verbose "Item not snatched..."
             try
                 {
+                Write-Verbose "-SabNZBdplus $sabUrl -APIKey $sabKey -sabCategory $sabCategory -NZBURL $($SelectedDownload.link)"
                 $downloadAdd = Send-Download -SabNZBdplus $sabUrl -APIKey $sabKey -sabCategory $sabCategory -NZBURL $($SelectedDownload.link) 
+                New-PushalotNotification -AuthorizationToken $PushAuthToken -Title "New result for $searchString Snatched" -Body "$searchString has been snatched`n$($SelectedDownload.title)"  
                 }
             catch
                 {
-                New-PushalotNotification -AuthorizationToken $PushAuthToken -Title "New result for $searchString failed to download!" -Body "$searchString has been found but the download failed. `n$($SelectedDownload.name)" -IsImportant $True
+                New-PushalotNotification -AuthorizationToken $PushAuthToken -Title "New result for $searchString failed to download!" -Body "$searchString has been found but the download failed. `n$($SelectedDownload.title)`n$($SelectedDownload.link)`n$($_.Exception)" -IsImportant $True
                 }
             }
         else
             {
             Write-Verbose "Item already Snatched"
             }
-
-                New-PushalotNotification -AuthorizationToken $PushAuthToken -Title "New result for $searchString Snatched" -Body "$searchString has been snatched/n$($SelectedDownload.name)"  
-         
-                
-            }
         }
+        else
+        {
+        "Download cancelled - $($SelectedDownload.FriendlySize)"
+        }
+
+    }
 
     
     

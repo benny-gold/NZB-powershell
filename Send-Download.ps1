@@ -23,7 +23,7 @@
 
         # Category to place download in
         [Parameter(Mandatory=$True)]
-        [validateSet("tv","movies","music","jizzles")]
+        [validateSet("books","comics","magazines","movies","music","software","tv","jizzles")]
         [string]
         $sabCategory
 
