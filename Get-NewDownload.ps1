@@ -9,54 +9,93 @@
    2016 refactor of add-TVShow
 #>
 
-workflow Get-NewDownload 
-{
-    Param
-    (
-        # Item to search for
-        [string]
-        $searchString
-
-    )
-
-$NZBResults = Search-Newznab -NewzNab $geekURL -APIKey $geekKey -searchString $searchString
-
-$NZBResults[0]
-
-# Figure out category
-
-switch($($NZBResults.Category))
+Function Get-NewDownload 
     {
+        Param
+        (
+            # Item to search for
+            [string]
+            $searchString,
 
-    }
+            # Only get the latest result
+            [switch]
+            $GetLatest
+
+        )
+    # Load Resources
+    Gci "$PSScriptRoot\*.ps1" | ForEach-Object {. $_.FullName}
+    
+    
+
+    $NZBResults = Search-Newznab -NewzNab $geekURL -APIKey $geekKey -searchString $searchString
 
 
-#Check in history
+    # Interactive or automated? Get the download you want. 
 
-if($NZBResults -ne $null)
-    {
-    if((Get-SabNZBdHistory -SabNZBdplus $sabUrl -APIKey $sabKey -NZBId $($NZBResults[0].link)) -eq $false)        
+    if($GetLatest.IsPresent)
         {
-        Write-Verbose "Item not snatched..."
-        try
-            {
-            $downloadAdd = Send-Download -SabNZBdplus $sabUrl -APIKey $sabKey -sabCategory $searchString -NZBURL $($NZBResults[0].link)
+        $SelectedDownload = $NZBResults[0]
+        }
+    else 
+        {
+        $number = 0
+        InlineScript{
+            $NZBResults | ft index,friendlySize,Title,pubDate
             }
-        catch
-            {
-            New-PushalotNotification -AuthorizationToken $PushAuthToken -Title "New result for $searchString failed to download!" -Body "$searchString has been found but the download failed. `n$($NZBResults[0].name)" -IsImportant $True
+        $switch = 'switch($userSelectedDownload){'
+        Foreach ($Download in $NZBResults)
+    	    {
+            $number += 1 
+            $switch += "`n`t $($NZBResults.IndexOf($Download)) {`$SelectedDownload = `$NZBResults[$($NZBResults.IndexOf($Download))]}"
             }
+        $switch += "`n}"
+        InlineScript{
+            [int]$userSelectedDownload = Read-Host "Which Item do you want to download?"
+            }
+        invoke-expression $switch
+        }
+
+
+    # Figure out category
+
+    $categories = Get-Content "$PSScriptRoot\Helpers\SabCategories.json" | ConvertFrom-Json
+    if($categories.($SelectedDownload.Category))
+        {
+        Write-Verbose "Setting $($categories.($SelectedDownload.Category))"
+        $sabCategory += "{0}" -f $categoriess.($SelectedDownload.Category)
         }
     else
         {
-        Write-Verbose "Item already Snatched"
+        $sabCategory = "jizzles"
         }
 
-            New-PushalotNotification -AuthorizationToken $PushAuthToken -Title "New result for $searchString Snatched" -Body "$searchString has been snatched/n$($NZBResults[0].name)"  
+
+    #Check in history
+
+    if($SelectedDownload -ne $null)
+        {
+        if((Get-SabNZBdHistory -SabNZBdplus $sabUrl -APIKey $sabKey -NZBId $($SelectedDownload.link)) -eq $false)        
+            {
+            Write-Verbose "Item not snatched..."
+            try
+                {
+                $downloadAdd = Send-Download -SabNZBdplus $sabUrl -APIKey $sabKey -sabCategory $sabCategory -NZBURL $($SelectedDownload.link) 
+                }
+            catch
+                {
+                New-PushalotNotification -AuthorizationToken $PushAuthToken -Title "New result for $searchString failed to download!" -Body "$searchString has been found but the download failed. `n$($SelectedDownload.name)" -IsImportant $True
+                }
+            }
+        else
+            {
+            Write-Verbose "Item already Snatched"
+            }
+
+                New-PushalotNotification -AuthorizationToken $PushAuthToken -Title "New result for $searchString Snatched" -Body "$searchString has been snatched/n$($SelectedDownload.name)"  
          
                 
+            }
         }
-    }
 
     
-}
+    
