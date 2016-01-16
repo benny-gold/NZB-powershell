@@ -19,7 +19,11 @@ Function Get-NewDownload
 
             # Only get the latest result
             [switch]
-            $GetLatest
+            $GetLatest,
+
+            # Maximum Size to download
+            [int]
+            $maxSize=5000
 
         )
     # Load Resources
@@ -71,7 +75,7 @@ Function Get-NewDownload
 
     #Check in history
 
-    if($SelectedDownload -ne $null -and $SelectedDownload.FriendlySize -lt 400)
+    if($SelectedDownload -ne $null -and $SelectedDownload.FriendlySize -lt $maxSize)
         {
         if((Get-SabNZBdHistory -SabNZBdplus $sabUrl -APIKey $sabKey -NZBId $($SelectedDownload.link)) -eq $false)        
             {
