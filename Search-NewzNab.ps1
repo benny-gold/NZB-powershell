@@ -113,96 +113,38 @@ function Search-Newznab
     $encodedSearchString = [System.Web.HttpUtility]::UrlEncode($searchString)
     $searchURL = $NewzNabURL+"&q=$($encodedSearchString)"
 
-switch ($psCmdlet.ParameterSetName) 
-    {
-    "Book"
-        {
-        Write-Verbose "Setting Book Search"
-        $searchURL += "&t=book"
-        if($Author -ne "")
-            {
-            Write-Verbose "Adding Author"
-            $searchURL += "&ep=$($Author)"
-            }
+    $ParamSet = @{
+        book = "&t=book"
+        movie = "&t=movie"
+        music = "&t=music"
+        tv = "&t=tvsearch"
+        general = "&t=search"
         }
-    "Movie"
-        {
-        Write-Verbose "Setting Movie Search"
-        $searchURL += "&t=movie"
-        if($imdbid -ne $null)
-            {
-            Write-Verbose "Adding IMDB ID"
-            $searchURL += "&imdbid=$($imdbid)"
-            }
-        if($Genre-ne "")
-            {
-            Write-Verbose "Adding Genre"
-            $searchURL += "&genre=$($Genre)"
-            }
-        }
-    "Music"
-        {
-        Write-Verbose "Setting Music Search"
-        $searchURL += "&t=music"
-        if($Artist -ne "")
-            {
-            Write-Verbose "Adding Artist:`n$($Artist.GetType())"
-            $searchURL += "&artist=$($Artist)"
-            }
-        if($Album -ne "")
-            {
-            Write-Verbose "Adding Album"
-            $searchURL += "&album=$($Album)"
-            }
-        if($Label -ne "")
-            {
-            Write-Verbose "Adding Label"
-            $searchURL += "&label=$($Label)"
-            }
-        if($Year -ne "")
-            {
-            Write-Verbose "Adding Year"
-            $searchURL += "&year=$($Year)"
-            }
-        if($Genre-ne "")
-            { 
-            Write-Verbose "Adding Genre"
-            $searchURL += "&genre=$($Genre)"
-            }
-        }
-    "TV"
-        {
-        Write-Verbose "Setting TV Search"
-        $searchURL += "&t=tvsearch"
-        if($Season -ne $null)
-            {
-            Write-Verbose "Adding Season"
-            $searchURL += "&season=$($Season)"
-            }
-        if($Episode -ne $null)
-            {
-            Write-Verbose "Adding Episode"
-            $searchURL += "&ep=$($Episode)"
-            }
-        if($TVRageId -ne $null)
-            {
-            Write-Verbose "Adding TVRageID"
-            $searchURL += "&rid=$($TVRageId)"
-            }
-        if($TVDBId -ne $null)
-            {
-            Write-Verbose "Adding TVDBID"
-            $searchURL += "&tvdbid=$($TVDBId)"
-            }
-        }
-    "General"
-        {
-        Write-Verbose "Setting General Search"
-        $searchURL += "&t=search"
-        }
-    }
 
+    $searchURL += $ParamSet.($psCmdlet.ParameterSetName)
 
+    $SearchOptions = @{
+        TVDBId = 'tvdbid'
+        TVRageId = 'rid'
+        Season = 'season'
+        Episode = 'ep'
+        Author = 'Author'
+        imdbid = 'imdbid'
+        genre = 'genre'
+        artist = 'artist'
+        album = 'album'
+        label = 'label'
+        year = 'year'
+        }
+
+    foreach($key in $PSBoundParameters.keys)
+        {
+            if($SearchOptions.($key))
+            {
+                Write-Verbose "Adding $($SearchOptions.($key))"
+                $searchURL += "&{0}={1}" -f $SearchOptions.($key), $PSBoundParameters.($key)
+            }
+        }
 
 
     Write-Verbose "SearchURL = $searchURL"
