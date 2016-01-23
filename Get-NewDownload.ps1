@@ -9,7 +9,7 @@
    2016 refactor of add-TVShow
 #>
 
-Function Get-NewDownload 
+Function Global:Get-NewDownload 
     {
         Param
         (
@@ -23,7 +23,7 @@ Function Get-NewDownload
 
             # Maximum Size to download
             [int]
-            $maxSize=5000
+            $maxSize=50000
 
         )
     # Load Resources
