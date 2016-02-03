@@ -11,7 +11,7 @@ Get-NewDownload -searchString "$($args[0] | Out-String)" -GetLatest -maxSize 500
 
 
 
-$JobTrigger = New-JobTrigger -At $((get-date).AddSeconds(30)) -RepeatIndefinitely -RepetitionInterval (New-TimeSpan -Minutes 15) -Once
+$JobTrigger = New-JobTrigger -At $((get-date).AddSeconds(30)) -RepeatIndefinitely -RepetitionInterval (New-TimeSpan -Minutes (Get-Random -Minimum 720 -Maximum 1440)) -Once
 $JobOption = New-ScheduledJobOption -RequireNetwork -RestartOnIdleResume -StartIfIdle
 
 
