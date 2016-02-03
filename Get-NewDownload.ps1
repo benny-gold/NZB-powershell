@@ -1,4 +1,6 @@
-﻿<#
+﻿$VerbosePreference = "Continue" 
+
+<#
 .Synopsis
    NewzNab Automation tool
 .DESCRIPTION
@@ -27,6 +29,9 @@ Function Global:Get-NewDownload
 
         )
     # Load Resources
+
+    $VerbosePreference = "Continue" 
+   
     Gci "$PSScriptRoot\*.ps1" | ForEach-Object {. $_.FullName}
     
     
@@ -100,8 +105,8 @@ Function Global:Get-NewDownload
         {
         "Download cancelled - $($SelectedDownload.FriendlySize)"
         }
+        
 
     }
 
-    
     
