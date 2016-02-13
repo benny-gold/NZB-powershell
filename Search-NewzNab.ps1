@@ -164,7 +164,8 @@ function Search-Newznab
         $cleanObject | Add-Member -type NoteProperty -name pubDate -Value $([DateTime]::Parse($searchResult.pubDate))
         $cleanObject | Add-Member -type NoteProperty -name category -Value $searchResult.category 
         $cleanObject | Add-Member -type NoteProperty -name Description -Value $searchResult.description
-        $cleanObject | Add-Member -type NoteProperty -name FriendlySize -Value ("{0:N2}" -f (($($searchResult).attr[2].value)/1Mb))
+        $cleanObject | Add-Member -type NoteProperty -name NonFriendlySize -Value $($searchResult).attr[2].value
+        $cleanObject | Add-Member -type NoteProperty -name FriendlySize -Value ("{0:N0}" -f (($($searchResult).attr[2].value)/1Mb))
         $cleanResults += $cleanObject  
         }
 

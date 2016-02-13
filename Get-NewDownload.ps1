@@ -80,7 +80,11 @@ Function Global:Get-NewDownload
 
     #Check in history
 
-    if($SelectedDownload -ne $null -and $SelectedDownload.FriendlySize -lt $maxSize)
+    [string]$strNum = $SelectedDownload.FriendlySize
+    [int]$intNum = [convert]::ToInt32($strNum, 10)
+
+
+    if($intNum -lt $maxSize)
         {
         if((Get-SabNZBdHistory -SabNZBdplus $sabUrl -APIKey $sabKey -NZBId $($SelectedDownload.link)) -eq $false)        
             {
@@ -103,7 +107,9 @@ Function Global:Get-NewDownload
         }
         else
         {
-        "Download cancelled - $($SelectedDownload.FriendlySize)"
+        "Download cancelled due to being too large:- `n$($SelectedDownload.FriendlySize) | $maxSize | $intNum"
+         $SelectedDownload
+
         }
         
 
