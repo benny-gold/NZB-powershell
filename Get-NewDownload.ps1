@@ -66,18 +66,8 @@ Function Global:Get-NewDownload
 
     # Figure out category
 
-    $categories = Get-Content "$PSScriptRoot\Helpers\SabCategories.json" | ConvertFrom-Json
-    if($categories.($SelectedDownload.Category))
-        {
-        Write-Verbose "Setting Category to $($categories.($SelectedDownload.Category))"
-        $sabCategory += "{0}" -f $categories.($SelectedDownload.Category)
-        }
-    else
-        {
-        $sabCategory = "jizzles"
-        }
-
-
+    $sabCategory = Get-DownloadCategory -Category $SelectedDownload.Category
+    
     #Check in history
 
     [string]$strNum = $SelectedDownload.FriendlySize
