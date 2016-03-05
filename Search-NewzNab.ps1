@@ -15,7 +15,7 @@ function Search-Newznab
         $APIKey,
     
         #String to search for
-        [Parameter(Mandatory=$True)]
+        [Parameter(Mandatory=$false)]
         [string]
         $searchString,
 
@@ -109,9 +109,12 @@ function Search-Newznab
 
 
     # Build out query string
-    Add-Type -AssemblyName System.Web
-    $encodedSearchString = [System.Web.HttpUtility]::UrlEncode($searchString)
-    $searchURL = $NewzNabURL+"&q=$($encodedSearchString)"
+    if($searchString -ne $null)
+        {
+        Add-Type -AssemblyName System.Web
+        $encodedSearchString = [System.Web.HttpUtility]::UrlEncode($searchString)
+        $searchURL = $NewzNabURL+"&q=$($encodedSearchString)"
+        }
 
     $ParamSet = @{
         book = "&t=book"
@@ -120,6 +123,7 @@ function Search-Newznab
         tv = "&t=tvsearch"
         general = "&t=search"
         }
+    
 
     $searchURL += $ParamSet.($psCmdlet.ParameterSetName)
 
@@ -149,8 +153,6 @@ function Search-Newznab
 
     Write-Verbose "SearchURL = $searchURL"
     $searchResults = Invoke-RestMethod $searchURL 
-
-  
 
     # Clean up the metadata and create a new array
     $cleanResults = @()

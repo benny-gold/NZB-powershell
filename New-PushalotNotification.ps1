@@ -35,5 +35,5 @@
 
     $PushJSON =  ConvertTo-Json $PushBody
     $response = Invoke-RestMethod -Method Post -Uri $PushAPI -Body $PushJSON -ErrorAction SilentlyContinue -ContentType "application/json"
-    $response | fl Success,Description
+    $response 
     }

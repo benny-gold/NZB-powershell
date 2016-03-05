@@ -7,6 +7,6 @@ Describe "Get-IMDBId" {
          (Get-IMDBId -MovieName Scarface).title | Should Be Scarface
     }
     It "Returns an IMDB Id" {
-         (Get-IMDBId -MovieName "Die Hard").imdbID | Should Be tt0095016
+         (Get-IMDBId -MovieName "Die Hard").imdbID | Should Be 0095016
     }
 }
