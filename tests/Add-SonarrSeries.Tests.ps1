@@ -1,13 +1,24 @@
 ﻿$here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path).Replace(".Tests.", ".")
 . "$here\..\$sut"
+. "$here\..\secrets.ps1"
+. "$here\..\Get-TVDBId.ps1"
+
 
 Describe "Add-SonarrSeries" {
     It "adds a TV Show" {
-        $true | Should Be $false
+        $showToTest = "Fear Factor"
+        $tvdbidFound = (Get-TVDBId -APIKey $TVDBIDKey -show $showToTest).id
+        Add-SonarrSeries -sonarrURL $SonarrURL -sonarrAPIKey $SonarrKey -tvSeries $showToTest -TVDBID $tvdbidFound -qualityProfileId 1 -seasons 1,2,3 -rootFolderPath $rootFolderPath | Should not be null
+        
+        # Clean Up
+        $testShowId = (Get-SonarrSeries -sonarrURL $SonarrURL -sonarrAPIKey $SonarrKey| Where-Object {$_.tvdbId -like $tvdbidFound}).id
+        Invoke-RestMethod -Method Delete -Uri "$sonarrURL/api/series/$testShowId" -Headers  @{"X-Api-Key"=$SonarrKey}
     }
 
     It "shouldn't add an existing TV Show" {
-        Add-SonarrSeries -sonarrURL $SonarrURL -sonarrAPIKey $SonarrKey -tvSeries "It's Always Sunny in Philadelphia" | Should Throw
+        $showToTest = "It's Always Sunny in Philadelphia" 
+        $tvdbidFound = (Get-TVDBId -APIKey $TVDBIDKey -show $showToTest).id
+        Add-SonarrSeries -sonarrURL $SonarrURL -sonarrAPIKey $SonarrKey -tvSeries $showToTest -TVDBID $tvdbidFound -qualityProfileId 1 -seasons 1,2,3 -rootFolderPath $rootFolderPath | Should be False
     }
 }

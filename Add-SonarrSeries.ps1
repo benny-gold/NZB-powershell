@@ -12,14 +12,68 @@
                 
         [Parameter(Mandatory=$True,Position=2)]
         [string]
-        $tvSeries
+        $tvSeriesTitle,
+
+        [Parameter(Mandatory=$True,Position=3)]
+        [int]
+        $TVDBID,
+
+        [Parameter(Mandatory=$True,Position=4)]
+        [int]
+        $qualityProfileId,
+
+        [Parameter(Mandatory=$True,Position=5)]
+        [array]
+        $seasons,
+
+        [Parameter(Mandatory=$True,Position=6)]
+        [string]
+        $rootFolderPath 
         )
 
-        $headers = @{
-            "X-Api-Key"=$sonarrURL
+
+        if((Get-SonarrSeries -sonarrURL $SonarrURL -sonarrAPIKey $SonarrKey| Where-Object {$_.tvdbId -like $TVDBID}))
+            {
+            Write-verbose "Series Already Added. Aborting" 
+            return $false
+            exit
             }
 
-        $apiCall = "$sonarrURL/api/"
+            
+        $seasonsObject = @()
+        foreach ($season in $seasons)
+            {
+            $seasonObject = @{"seasonNumber"="$season";"monitored"="True"}
+            $seasonsObject += $seasonObject
+            }
+
+        # Create the slug, whatever that is.
+        $pattern = '[^a-zA-Z|\s]'
+        $tvSeriesTitleSlug = $tvSeriesTitle.ToLower() -replace $pattern,"" -replace " ","-"
+        write-verbose "Slug is $tvSeriesTitleSlug" 
+
+        $body = @{
+            "tvdbId"=$TVDBID;
+            "title"=$tvSeriesTitle;
+            "qualityProfileId"=$qualityProfileId;
+            "titleSlug"=$tvSeriesTitleSlug;
+            "seasons"=$seasonsObject;
+            "rootFolderPath"=$rootFolderPath;
+            }
+
+
+        $apiCall = "$sonarrURL/api/series"
+        $bodyJson = ConvertTo-Json -InputObject $body
 
         
+        $headers = @{
+            "X-Api-Key"=$sonarrAPIKey
+            }
+
+
+        write-verbose $apiCall 
+        $shows = Invoke-RestMethod -Method Post -Uri $apiCall -Headers $headers -Body $bodyJson
+        return $shows
+
 }
+

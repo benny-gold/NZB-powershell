@@ -13,8 +13,12 @@
         )
 
         $headers = @{
-            "X-Api-Key"=$sonarrURL
+            "X-Api-Key"=$sonarrAPIKey
             }
 
         $apiCall = "$sonarrURL/api/series"
+        
+        write-verbose $apiCall 
+        $shows = Invoke-RestMethod -Method Get -Uri $apiCall -Headers $headers
+        return $shows
 }
