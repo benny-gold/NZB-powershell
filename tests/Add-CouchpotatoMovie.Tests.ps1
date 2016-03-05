@@ -8,8 +8,10 @@ Describe "Add-CouchpotatoMovie" {
         Add-CouchpotatoMovie -CouchURL $CouchURL -CouchAPIKey $couchKey | Should not Be $null
     }  
     It "Successfully adds movie" {
-        (Add-CouchpotatoMovie -CouchURL $CouchURL -CouchAPIKey $couchKey -MovieID tt0086250).Success | Should Be $true
+        (Add-CouchpotatoMovie -CouchURL $CouchURL -CouchAPIKey $couchKey -MovieID 0086250).Success | Should Be $true
     }
-
+    It "Successfully finds movie" {
+        (Add-CouchpotatoMovie -CouchURL $CouchURL -CouchAPIKey $couchKey -MovieID 0086250).movie.type | Should Be movie
+    }
 }
 
