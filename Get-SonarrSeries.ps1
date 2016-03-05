@@ -1,4 +1,4 @@
-﻿function Add-SonarrSeries {
+﻿function Get-SonarrSeries {
     [OutputType([Object])]
     Param
         (
@@ -8,18 +8,13 @@
 
         [Parameter(Mandatory=$True,Position=1)]
         [string]
-        $sonarrAPIKey,
-                
-        [Parameter(Mandatory=$True,Position=2)]
-        [string]
-        $tvSeries
+        $sonarrAPIKey
+               
         )
 
         $headers = @{
             "X-Api-Key"=$sonarrURL
             }
 
-        $apiCall = "$sonarrURL/api/"
-
-        
+        $apiCall = "$sonarrURL/api/series"
 }
