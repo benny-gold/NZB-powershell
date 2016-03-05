@@ -7,9 +7,6 @@ Describe "Add-CouchpotatoMovie" {
     It "Doesn't error" {
         Add-CouchpotatoMovie -CouchURL $CouchURL -CouchAPIKey $couchKey | Should not Be $null
     }  
-    It "Finds the movie" {
-        (Add-CouchpotatoMovie -CouchURL $CouchURL -CouchAPIKey $couchKey -MovieID tt0086250).Success | Should Be $true
-    } 
     It "Successfully adds movie" {
         (Add-CouchpotatoMovie -CouchURL $CouchURL -CouchAPIKey $couchKey -MovieID tt0086250).Success | Should Be $true
     }

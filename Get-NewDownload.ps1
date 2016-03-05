@@ -1,6 +1,4 @@
-﻿$VerbosePreference = "Continue" 
-
-<#
+﻿<#
 .Synopsis
    NewzNab Automation tool
 .DESCRIPTION
