@@ -27,7 +27,7 @@ You require some or all of the following applications & accounts:
 *   [TVDB Id](http://thetvdb.com/?tab=xml)
     * API key
 
-**Setup Secrets.ps1**
+**Setup Secrets & Keys**
 
 Fill in the information in secretstemplate.txt and resave it as secrets.ps1 in the root directory.
 
