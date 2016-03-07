@@ -35,41 +35,35 @@ Fill in the information in secretstemplate.txt and resave it as secrets.ps1 in t
 Usage
 =====
 
+**CouchPotato**
+
 Add-CouchpotatoMovie
 
     Add-CouchpotatoMovie [-CouchURL] <string> [-CouchAPIKey <string>] [-MovieID <int>]
-	
+
+**Sonarr**
+		
+Get-SonarrSeries
+
+    Get-SonarrSeries [-sonarrURL] <string> [-sonarrAPIKey] <string>  [<CommonParameters>]
+
 Add-SonarrSeries
 
     Add-SonarrSeries [-sonarrURL] <string> [-sonarrAPIKey] <string> [-tvSeriesTitle] <string> [-TVDBID] <int>
     [-qualityProfileId] <int> [-seasons] <array> [-rootFolderPath] <string>  [<CommonParameters>]
 	
-Get-DownloadCategory
 
-    Get-DownloadCategory [-Category] <string>  [<CommonParameters>]
-	
+**Providers**
+
 Get-IMDBId
 
     Get-IMDBId [-MovieName] <string>  [<CommonParameters>]
 	
-Get-SabNZBdHistory
-
-    Get-SabNZBdHistory [[-SabNZBdplus] <string>] [[-APIKey] <string>] [-NZBId] <string>  [<CommonParameters>]
-	
-Get-SonarrSeries
-
-    Get-SonarrSeries [-sonarrURL] <string> [-sonarrAPIKey] <string>  [<CommonParameters>]
 	
 Get-TVDBId
 
     Get-TVDBId [-APIKey] <string> [-show] <string>  [<CommonParameters>]
 	
-New-PushalotNotification
-
-    New-PushalotNotification [-Title] <string> -Body <string> [-AuthorizationToken <string>] [-LinkTitle <string>]
-    [-Link <string>] [-IsImportant <bool>] [-IsSilent <bool>] [-Image <string>] [-Source <string>] [-TimeToLive <int>]
-     [<CommonParameters>]
-	 
 	 
 Search-NewzNab
 
@@ -88,18 +82,35 @@ Search-NewzNab
     Search-Newznab [-NewzNab <string>] [-APIKey <string>] [-searchString <string>] [-retentionDays <int>] [-Book]
     [-Author <string>]  [<CommonParameters>]
 
+
+**Notifications**
+
+New-PushalotNotification
+
+    New-PushalotNotification [-Title] <string> -Body <string> [-AuthorizationToken <string>] [-LinkTitle <string>]
+    [-Link <string>] [-IsImportant <bool>] [-IsSilent <bool>] [-Image <string>] [-Source <string>] [-TimeToLive <int>]
+     [<CommonParameters>]
+
+
+**SabNZBd+**
+
+Get-DownloadCategory
+
+    Get-DownloadCategory [-Category] <string>  [<CommonParameters>]
+	
 Send-Download
 
     Send-Download [[-SabNZBdplus] <string>] [[-APIKey] <string>] [-NZBURL] <string> [[-NZBTitle] <string>]
     [-sabCategory] <string> {books | comics | magazines | movies | music | software | tv | jizzles}
     [<CommonParameters>]
+
+Get-SabNZBdHistory
+
+    Get-SabNZBdHistory [[-SabNZBdplus] <string>] [[-APIKey] <string>] [-NZBId] <string>  [<CommonParameters>]
+
+**Multi-Tool**
 	
 Get-NewDownload
 
     Get-NewDownload [[-searchString] <String>] [-GetLatest] [[-maxSize] <Int32>] [<CommonParameters>]
 
-
-DESCRIPTION
-
-    Provide this script with an item to download and it will check for it and download if it hasn't already been
-    snatched, notifying your phone & laptops.
