@@ -16,23 +16,15 @@
         $endDate  
         )
 
-        $headers = @{
-            "X-Api-Key"=$sonarrAPIKey
-            }
-        
-
-
-
-
-        $apiCall = "$sonarrURL/api/Calendar"
-
         $dateFormat = "yyyy-MM-dd"
 
-        
-        write-verbose $bodyJSON
-        
-        $Calendar = Invoke-RestMethod -Method Get -Uri $apiCall -Headers $headers
+        $apiCall = "$sonarrURL/api/Calendar?startDate=$($startDate.ToString($dateFormat))&endDate=$($endDate.ToString($dateFormat))"
+
+        $headers = @{"X-Api-Key"=$sonarrAPIKey}
+
+        Write-Verbose $apiCall
+
+        $Calendar = Invoke-RestMethod -Method Get -Uri $apiCall -Headers $headers -Body $bodyJson
+
         return $Calendar
-}
-
-
+    }

@@ -5,11 +5,11 @@ $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path).Replace(".Tests.", ".")
 
 Describe "Get-SonarrCalendar" {
     $today = (Get-Date).AddHours(-8)
-    $tomorrow = (Get-Date).AddDays(-1)
-    $week = (Get-Date).AddDays(7)
+    $tomorrow = (Get-Date).AddHours(-8).AddDays(1)
+    $week = (Get-Date).AddHours(-8).AddDays(7)
     
     It "Should return Today's shows." {
-       (Get-SonarrCalendar -sonarrURL $SonarrURL -sonarrAPIKey $SonarrKey).airDate | Should Be $today.ToString("yyyy-MM-dd")
+       (Get-SonarrCalendar -sonarrURL $SonarrURL -sonarrAPIKey $SonarrKey)[1].airDate | Should Be $today.ToString("yyyy-MM-dd")
     }
 
     It "Should return Tomorrow's shows." {
