@@ -22,15 +22,11 @@
 
         $dateFormat = "yyyy-MM-dd"
 
-        if($PsCmdlet.ParameterSetName -like "Dated")
+        switch($PsCmdlet.ParameterSetName) 
             {
-            $apiCall = "$sonarrURL/api/Calendar?start=$($startDate.ToString($dateFormat))&end=$($endDate.ToString($dateFormat))"
+            "Dated" {$apiCall = "$sonarrURL/api/Calendar?start=$($startDate.ToString($dateFormat))&end=$($endDate.ToString($dateFormat))"}
+            "NotDatae" {$apiCall = "$sonarrURL/api/Calendar"}
             }
-        else
-            {
-            $apiCall = "$sonarrURL/api/Calendar"
-            }
-
 
         $headers = @{"X-Api-Key"=$sonarrAPIKey}
        
