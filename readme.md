@@ -64,7 +64,11 @@ Get-TVDBId
 
     Get-TVDBId [-APIKey] <string> [-show] <string>  [<CommonParameters>]
 	
-	 
+Get-Categories	
+
+    Get-Categories [[-NewzNab] <string>] [[-APIKey] <string>] 
+	
+
 Search-NewzNab
 
     Search-Newznab [-NewzNab <string>] [-APIKey <string>] [-searchString <string>] [-retentionDays <int>]
@@ -90,6 +94,10 @@ New-PushalotNotification
     New-PushalotNotification [-Title] <string> -Body <string> [-AuthorizationToken <string>] [-LinkTitle <string>]
     [-Link <string>] [-IsImportant <bool>] [-IsSilent <bool>] [-Image <string>] [-Source <string>] [-TimeToLive <int>]
      [<CommonParameters>]
+
+Send-MailgunMessage
+	 
+    Send-MailgunMessage [-APIKey] <string> [-fromName] <string> [-Domain] <string> [-sender <string>] [-Subject <string>] [-html <Object>]  [<CommonParameters>]
 
 
 **SabNZBd+**
