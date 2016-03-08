@@ -22,6 +22,9 @@ You require some or all of the following applications & accounts:
     * API key
 *   [Pushalot](https://pushalot.com/)
     * API key
+*	[Mailgun](https://mailgun.com/)
+    * API key
+	* Domain
 *   [Usenet Provider](http://www.easynews.com/fromafriend.html?ref_key=e96e22bf5aeaf18c0c4133680e31199abe2fa8d0
 )
 *   [TVDB Id](http://thetvdb.com/?tab=xml)
