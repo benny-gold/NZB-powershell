@@ -34,7 +34,6 @@
     # Body of the email.
 
     [parameter(ParameterSetName = "HTML")]
-    [xml]
     $html,
 
     [parameter(ParameterSetName = "Text")]
@@ -44,8 +43,13 @@
  
   switch($PSCmdlet.ParameterSetName)  
     {
-    "HTML" {$emailBody = @{html="$($Email)"}}
-    "Text" {$emailBody = $text}
+    "HTML" {
+        #$emailBody = @{html="$($HTML)"}
+        $emailBody = $html
+        }
+    "Text" {
+        $emailBody = $text
+        }
     }
 
   $from = "$sender <$fromName@$Domain>"
