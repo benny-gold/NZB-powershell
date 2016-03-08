@@ -12,9 +12,7 @@
                
         )
 
-        $headers = @{
-            "X-Api-Key"=$sonarrAPIKey
-            }
+        $headers = @{"X-Api-Key"=$sonarrAPIKey}
 
         $apiCall = "$sonarrURL/api/series"
         

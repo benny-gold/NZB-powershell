@@ -18,9 +18,9 @@
         [int]
         $TVDBID,
 
-        [Parameter(Mandatory=$True,Position=4)]
+        [Parameter(Position=4)]
         [int]
-        $qualityProfileId,
+        $qualityProfileId=2,
 
         [Parameter(Mandatory=$True,Position=5)]
         [array]
@@ -66,9 +66,7 @@
         $bodyJson = ConvertTo-Json -InputObject $body
 
         
-        $headers = @{
-            "X-Api-Key"=$sonarrAPIKey
-            }
+        $headers = @{"X-Api-Key"=$sonarrAPIKey}
 
 
         write-verbose $apiCall 
