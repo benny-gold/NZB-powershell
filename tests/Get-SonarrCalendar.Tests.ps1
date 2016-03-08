@@ -13,10 +13,10 @@ Describe "Get-SonarrCalendar" {
     }
 
     It "Should return Tomorrow's shows." {
-       (Get-SonarrCalendar -sonarrURL $SonarrURL -sonarrAPIKey $SonarrKey -startDate $tomorrow -endDate $tomorrow)[0].airDate | Should Be $tomorrow.ToString("yyyy-MM-dd")
+       (Get-SonarrCalendar -sonarrURL $SonarrURL -sonarrAPIKey $SonarrKey -startDate $today -endDate $tomorrow)[0].airDate | Should Be $tomorrow.ToString("yyyy-MM-dd")
     }
 
     It "Should return shows a week from now" {
-       (Get-SonarrCalendar -sonarrURL $SonarrURL -sonarrAPIKey $SonarrKey -startDate $today -endDate $week)[-1].airDate | Should Be $week.ToString("yyyy-MM-dd")
+       (Get-SonarrCalendar -sonarrURL $SonarrURL -sonarrAPIKey $SonarrKey -startDate $week.AddDays(-1) -endDate $week)[-1].airDate | Should Be $week.ToString("yyyy-MM-dd")
     }
 }

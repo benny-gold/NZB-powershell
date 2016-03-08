@@ -1,30 +1,44 @@
 ﻿function Get-SonarrCalendar {
     Param
         (
-        [Parameter(Mandatory=$True,Position=0)]
+        [Parameter(ParameterSetName="NotDated", Mandatory=$true, Position=0)]
+        [Parameter(ParameterSetName="Dated", Mandatory=$true, Position=0) ]
         [string]
         $sonarrURL,
 
-        [Parameter(Mandatory=$True,Position=1)]
+        [Parameter(ParameterSetName="NotDated", Mandatory=$true, Position=1)]
+        [Parameter(ParameterSetName="Dated", Mandatory=$true, Position=1)]
         [string]
         $sonarrAPIKey,
 
+        [Parameter(ParameterSetName="Dated", Mandatory=$true, Position=1)]
         [datetime]
         $startDate,
 
+        [Parameter(ParameterSetName="Dated", Mandatory=$false, Position=1)]
         [datetime]
-        $endDate  
+        $endDate
         )
 
         $dateFormat = "yyyy-MM-dd"
 
-        $apiCall = "$sonarrURL/api/Calendar?startDate=$($startDate.ToString($dateFormat))&endDate=$($endDate.ToString($dateFormat))"
+        if($PsCmdlet.ParameterSetName -like "Dated")
+            {
+            $apiCall = "$sonarrURL/api/Calendar?start=$($startDate.ToString($dateFormat))&end=$($endDate.ToString($dateFormat))"
+            }
+        else
+            {
+            $apiCall = "$sonarrURL/api/Calendar"
+            }
+
 
         $headers = @{"X-Api-Key"=$sonarrAPIKey}
-
+       
         Write-Verbose $apiCall
 
-        $Calendar = Invoke-RestMethod -Method Get -Uri $apiCall -Headers $headers -Body $bodyJson
+        $Calendar = Invoke-RestMethod -Method Get -Uri $apiCall -Headers $headers
 
         return $Calendar
     }
+
+    
