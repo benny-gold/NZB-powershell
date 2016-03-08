@@ -1,6 +1,6 @@
 ﻿$here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path).Replace(".Tests.", ".")
-. "$here\..\$sut"
+. "$here\..\Providers\$sut"
 . "$here\..\secrets.ps1"
 
 Describe "Get-TVDBId" {
@@ -14,5 +14,3 @@ Describe "Get-TVDBId" {
         Get-TVDBId -Show "ae;kflhjs y09u098h spodnfkn" -APIKey $TVDBIDKey | Should Throw
     }
 }
-
-

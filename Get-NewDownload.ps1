@@ -29,8 +29,10 @@ Function Global:Get-NewDownload
     # Load Resources
 
    
-    Gci "$PSScriptRoot\*.ps1" | ForEach-Object {. $_.FullName}
-    
+    Gci "$PSScriptRoot\Notifications\*.ps1" | ForEach-Object {. $_.FullName}
+    Gci "$PSScriptRoot\Providers\*.ps1" | ForEach-Object {. $_.FullName}
+    Gci "$PSScriptRoot\SabNZBd+\*.ps1" | ForEach-Object {. $_.FullName}
+    . "$PSScriptRoot\secrets.ps1"
     
 
     $NZBResults = Search-Newznab -NewzNab $geekURL -APIKey $geekKey -searchString $searchString

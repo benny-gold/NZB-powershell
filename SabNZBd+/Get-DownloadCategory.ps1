@@ -8,7 +8,7 @@
         $Category
         )
 
-    $categories = Get-Content "$PSScriptRoot\Helpers\SabCategories.json" | ConvertFrom-Json
+    $categories = Get-Content "$PSScriptRoot\..\Helpers\SabCategories.json" | ConvertFrom-Json
     if($categories.($Category))
         {
         Write-Verbose "Setting Category to $($categories.($Category))"

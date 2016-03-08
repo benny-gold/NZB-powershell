@@ -1,9 +1,9 @@
 ﻿$here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path).Replace(".Tests.", ".")
-. "$here\..\$sut"
+. "$here\..\Sonarr\$sut"
 . "$here\..\secrets.ps1"
-. "$here\..\Get-TVDBId.ps1"
-. "$here\..\Get-SonarrSeries.ps1"
+. "$here\..\Providers\Get-TVDBId.ps1"
+. "$here\..\Sonarr\Get-SonarrSeries.ps1"
 
 Describe "Add-SonarrSeries" {
     It "adds a TV Show" {
