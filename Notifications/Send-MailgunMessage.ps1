@@ -32,15 +32,28 @@
     $APIKey,
 
     # Body of the email.
-    $html 
+
+    [parameter(ParameterSetName = "HTML")]
+    [xml]
+    $html,
+
+    [parameter(ParameterSetName = "Text")]
+    [string]
+    $text
     )
  
+  switch($PSCmdlet.ParameterSetName)  
+    {
+    "HTML" {$emailBody = @{html="$($Email)"}}
+    "Text" {$emailBody = $text}
+    }
+
   $from = "$sender <$fromName@$Domain>"
   $to = $to -join "&to="
   $API = "https://api.mailgun.net/v3/$Domain/messages"
   $securePwd = ConvertTo-SecureString $APIKEy -AsPlainText -Force
   $credential = New-Object System.Management.Automation.PSCredential ("api", $securePwd)
-  $APICall = "$($API)?from=$($from)&to=$($to)&html=$($html)&subject=$($Subject)"
+  $APICall = "$($API)?from=$($from)&to=$($to)&html=$($emailBody)&subject=$($Subject)"
   Invoke-RestMethod -Uri $APICall -Credential $credential -Method Post
   }
 
