@@ -25,7 +25,7 @@
         switch($PsCmdlet.ParameterSetName) 
             {
             "Dated" {$apiCall = "$sonarrURL/api/Calendar?start=$($startDate.ToString($dateFormat))&end=$($endDate.ToString($dateFormat))"}
-            "NotDatae" {$apiCall = "$sonarrURL/api/Calendar"}
+            "NotDated" {$apiCall = "$sonarrURL/api/Calendar"}
             }
 
         $headers = @{"X-Api-Key"=$sonarrAPIKey}
