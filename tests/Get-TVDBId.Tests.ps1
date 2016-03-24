@@ -1,6 +1,6 @@
 ﻿$here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path).Replace(".Tests.", ".")
-Import-Module "$here\..\NZB-Powershell.psm1"
+Import-Module "$here\..\NZB-Powershell.psd1"
 
 Describe "Get-TVDBId" {
     It "returns a TV Show" {
