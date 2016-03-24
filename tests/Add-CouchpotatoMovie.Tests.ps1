@@ -1,7 +1,6 @@
 ﻿$here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path).Replace(".Tests.", ".")
-. "$here\..\CouchPotato\$sut"
-. "$here\..\secrets.ps1"
+Import-Module "$here\..\NZB-Powershell.psm1"
 
 Describe "Add-CouchpotatoMovie" {
     It "Doesn't error" {

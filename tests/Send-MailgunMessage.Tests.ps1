@@ -1,7 +1,7 @@
 ﻿$here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path).Replace(".Tests.", ".")
-. "$here\..\Notifications\$sut"
-. "$here\..\secrets.ps1"
+Import-Module "$here\..\NZB-Powershell.psm1"
+
 
 
 Describe "Send-MailgunMessage" {
