@@ -1,9 +1,6 @@
 ﻿$here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path).Replace(".Tests.", ".")
-. "$here\..\Sonarr\$sut"
-. "$here\..\secrets.ps1"
-. "$here\..\Providers\Get-TVDBId.ps1"
-. "$here\..\Sonarr\Get-SonarrSeries.ps1"
+Import-Module "$here\..\NZB-Powershell.psm1"
 
 Describe "Add-SonarrSeries" {
     It "adds a TV Show" {

@@ -1,6 +1,6 @@
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path).Replace(".Tests.", ".")
-. "$here\..\SabNZBd+\$sut"
+Import-Module "$here\..\NZB-Powershell.psm1"
 
 Describe "Get-DownloadCategory" {
     It "Matches no Category" {
