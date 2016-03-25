@@ -111,8 +111,7 @@ function Search-Newznab
     # Build out query string
     if($searchString -ne $null)
         {
-        Add-Type -AssemblyName System.Web
-        $encodedSearchString = [System.Web.HttpUtility]::UrlEncode($searchString)
+        $encodedSearchString = Invoke-URLEncoding -unencodedString $searchString
         $searchURL = $NewzNabURL+"&q=$($encodedSearchString)"
         }
 

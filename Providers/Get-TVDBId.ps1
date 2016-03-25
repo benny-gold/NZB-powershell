@@ -17,8 +17,8 @@
     $mirror = Get-Random -InputObject $xmlMirrors.Mirrors.Mirror.mirrorpath
 
 
-    Add-Type -AssemblyName System.Web
-    $show = [System.Web.HttpUtility]::UrlEncode($show)
+    $show = Invoke-URLEncoding -unencodedString $show
+    
 
     $apiCall = "$mirror/api/GetSeries.php?seriesname=$($show)"
     Write-Verbose $apiCall
