@@ -6,12 +6,12 @@ Describe "Get-SonarrCalendar" {
     [datetime]$today = (Get-Date).AddHours(-8)
     [datetime]$tomorrow = (Get-Date).AddHours(-8).AddDays(2)
     [datetime]$week = (Get-Date).AddHours(-8).AddDays(7)
-    
+    <#
     It "Should return Today's shows." {
        (Get-SonarrCalendar -sonarrURL $SonarrURL -sonarrAPIKey $SonarrKey)[1].airDate | Should Be $today.ToString("yyyy-MM-dd")
     }
 
-    <#
+    
     It "Should return Tomorrow's shows." {
        (Get-SonarrCalendar -sonarrURL $SonarrURL -sonarrAPIKey $SonarrKey -startDate $today.AddDays(1) -endDate $tomorrow)[-1].airDate | Should Be $today.ToString("yyyy-MM-dd")
     }#>
