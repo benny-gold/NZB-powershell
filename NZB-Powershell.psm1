@@ -7,4 +7,4 @@ Gci "$PSScriptRoot\SabNZBd+\*.ps1" | ForEach-Object {. $_.FullName}
 
 
 # Export-ModuleMember -Function *
-# Export-ModuleMember -Variable PushAuthToken,geekURL,geekKey,sabUrl,sabKey,SonarrURL,SonarrKey,rootFolderPath,CouchURL,couchKey,CouchAPIKey,mailgunKey,mailDomain,mailRecipient1,mailRecipient2,mailRecipients,mailRecipientsForTest,TVDBIDKey
+Export-ModuleMember -Variable PushAuthToken,geekURL,geekKey,sabUrl,sabKey,SonarrURL,SonarrKey,rootFolderPath,CouchURL,couchKey,CouchAPIKey,mailgunKey,mailDomain,mailRecipient1,mailRecipient2,mailRecipients,mailRecipientsForTest,TVDBIDKey
