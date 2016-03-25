@@ -14,9 +14,9 @@ Describe "Get-SonarrCalendar" {
     
     It "Should return Tomorrow's shows." {
        (Get-SonarrCalendar -sonarrURL $SonarrURL -sonarrAPIKey $SonarrKey -startDate $today.AddDays(1) -endDate $tomorrow)[-1].airDate | Should Be $today.ToString("yyyy-MM-dd")
-    }#>
+    }
 
     It "Should return shows a week from now" {
        (Get-SonarrCalendar -sonarrURL $SonarrURL -sonarrAPIKey $SonarrKey -startDate $week.AddDays(-1) -endDate $week)[-1].airDate | Should Be $today.AddDays(5).ToString("yyyy-MM-dd")
-    }
+    }#>
 }
