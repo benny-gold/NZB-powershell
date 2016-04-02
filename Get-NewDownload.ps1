@@ -73,6 +73,8 @@ Function Global:Get-NewDownload
 
     # Convert size to int for comparison
 
+    Write-Verbose "Convert size to int for comparison"
+
     [string]$strNum = $SelectedDownload.FriendlySize
     [int]$intNum = [convert]::ToInt32($strNum, 10)
 
@@ -81,6 +83,7 @@ Function Global:Get-NewDownload
         {
         # Check it's not already been snatched
        
+        Write-Verbose "Item fits max size"
 
         if(!(Test-SnatchStatus -guid $($SelectedDownload.guid) -documentDBLocation $documentDBLocation))        
             {
@@ -108,7 +111,9 @@ Function Global:Get-NewDownload
         }
         else
         {
-        "Download cancelled due to being too large:- `n$($SelectedDownload.FriendlySize) | $maxSize | $intNum | $SelectedDownload`n"
+        Write-Verbose "Got to cancellation"
+        Write-warning "Download cancelled due to being too large:- `n$($SelectedDownload.FriendlySize) | $maxSize | $intNum | $($SelectedDownload | ConvertTo-Json)`n"
+        return "Download cancelled due to being too large"
 
         }
         
