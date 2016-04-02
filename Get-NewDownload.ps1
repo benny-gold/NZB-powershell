@@ -70,11 +70,8 @@ Function Global:Get-NewDownload
     
     # Check in Database
 
-    if(!(Test-Path $documentDBLocation)) {
-        md $documentDBLocation
-        }
-    
-    $documentLocation = ""
+
+    # Convert size to int for comparison
 
     [string]$strNum = $SelectedDownload.FriendlySize
     [int]$intNum = [convert]::ToInt32($strNum, 10)
@@ -82,12 +79,18 @@ Function Global:Get-NewDownload
 
     if($intNum -lt $maxSize)
         {
-        if((Get-SabNZBdHistory -SabNZBdplus $sabUrl -APIKey $sabKey -NZBId $($SelectedDownload.link)) -eq $false)        
+        # Check it's not already been snatched
+       
+
+        if(!(Test-SnatchStatus -guid $($SelectedDownload.guid) -documentDBLocation $documentDBLocation))        
             {
             Write-Verbose "Item not snatched..."
             try
                 {
+                # Create new snatch status Item
                 $SelectedDownload | Add-Member -MemberType NoteProperty -Name snatchDate -Value ((Get-Date).ToString("dd/MM/yyyy HH:mm:ss"))
+                $SelectedDownload | ConvertTo-Json | Out-File -FilePath "$documentDBLocation\$($SelectedDownload.guid).json"
+
 
                 Write-Verbose "-SabNZBdplus $sabUrl -APIKey $sabKey -sabCategory $sabCategory -NZBURL $($SelectedDownload.link)"
                 $downloadAdd = Send-Download -SabNZBdplus $sabUrl -APIKey $sabKey -sabCategory $sabCategory -NZBURL $($SelectedDownload.link) 
