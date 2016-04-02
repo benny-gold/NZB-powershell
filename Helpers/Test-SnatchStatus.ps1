@@ -15,7 +15,9 @@
         md $documentDBLocation
         }
     
-    $documentLocation = "$documentDBLocation\$($SelectedDownload.guid).json"
+    $documentLocation = "$documentDBLocation\$guid.json"
+
+    Write-Verbose  "testing for $documentLocation"
 
     if(!(Test-Path $documentLocation))
         {
