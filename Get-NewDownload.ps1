@@ -23,13 +23,17 @@ Function Global:Get-NewDownload
 
             # Maximum Size to download
             [int]
-            $maxSize=50000
+            $maxSize=50000,
+
+            # (filepath) Location of JSON documents for previous snatches
+            [string]
+            $documentDBLocation
 
         )
     # Load Resources
 
    
-    Import-Module "$PSScriptRoot\NZB-Powershell.psm1" -Force
+    Import-Module "$PSScriptRoot\NZB-Powershell.psd1" -Force
     
 
     $NZBResults = Search-Newznab -NewzNab $geekURL -APIKey $geekKey -searchString $searchString
@@ -64,7 +68,13 @@ Function Global:Get-NewDownload
 
     $sabCategory = Get-DownloadCategory -Category $SelectedDownload.Category
     
-    #Check in history
+    # Check in Database
+
+    if(!(Test-Path $documentDBLocation)) {
+        md $documentDBLocation
+        }
+    
+    $documentLocation = ""
 
     [string]$strNum = $SelectedDownload.FriendlySize
     [int]$intNum = [convert]::ToInt32($strNum, 10)
@@ -77,6 +87,8 @@ Function Global:Get-NewDownload
             Write-Verbose "Item not snatched..."
             try
                 {
+                $SelectedDownload | Add-Member -MemberType NoteProperty -Name snatchDate -Value ((Get-Date).ToString("dd/MM/yyyy HH:mm:ss"))
+
                 Write-Verbose "-SabNZBdplus $sabUrl -APIKey $sabKey -sabCategory $sabCategory -NZBURL $($SelectedDownload.link)"
                 $downloadAdd = Send-Download -SabNZBdplus $sabUrl -APIKey $sabKey -sabCategory $sabCategory -NZBURL $($SelectedDownload.link) 
                 New-PushalotNotification -AuthorizationToken $PushAuthToken -Title "New result for $searchString Snatched" -Body "$searchString has been snatched`n$($SelectedDownload.title)"  
@@ -93,12 +105,9 @@ Function Global:Get-NewDownload
         }
         else
         {
-        "Download cancelled due to being too large:- `n$($SelectedDownload.FriendlySize) | $maxSize | $intNum"
-         $SelectedDownload
+        "Download cancelled due to being too large:- `n$($SelectedDownload.FriendlySize) | $maxSize | $intNum | $SelectedDownload`n"
 
         }
         
 
     }
-
-    

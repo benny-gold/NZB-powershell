@@ -167,6 +167,7 @@ function Search-Newznab
         $cleanObject | Add-Member -type NoteProperty -name Description -Value $searchResult.description
         $cleanObject | Add-Member -type NoteProperty -name NonFriendlySize -Value $($searchResult).attr[2].value
         $cleanObject | Add-Member -type NoteProperty -name FriendlySize -Value ("{0:N0}" -f (($($searchResult).attr[2].value)/1Mb))
+        $cleanObject | Add-Member -type NoteProperty -name guid -Value ($searchResult.guid.'#text' -replace "https://api.nzbgeek.info/details/","")
         $cleanResults += $cleanObject  
         }
 
