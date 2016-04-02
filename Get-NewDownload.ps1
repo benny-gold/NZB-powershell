@@ -23,13 +23,17 @@ Function Global:Get-NewDownload
 
             # Maximum Size to download
             [int]
-            $maxSize=50000
+            $maxSize=50000,
+
+            # (filepath) Location of JSON documents for previous snatches
+            [string]
+            $documentDBLocation
 
         )
     # Load Resources
 
    
-    Import-Module "$PSScriptRoot\NZB-Powershell.psm1" -Force
+    Import-Module "$PSScriptRoot\NZB-Powershell.psd1" -Force
     
 
     $NZBResults = Search-Newznab -NewzNab $geekURL -APIKey $geekKey -searchString $searchString
@@ -64,7 +68,12 @@ Function Global:Get-NewDownload
 
     $sabCategory = Get-DownloadCategory -Category $SelectedDownload.Category
     
-    #Check in history
+    # Check in Database
+
+
+    # Convert size to int for comparison
+
+    Write-Verbose "Convert size to int for comparison"
 
     [string]$strNum = $SelectedDownload.FriendlySize
     [int]$intNum = [convert]::ToInt32($strNum, 10)
@@ -72,11 +81,20 @@ Function Global:Get-NewDownload
 
     if($intNum -lt $maxSize)
         {
-        if((Get-SabNZBdHistory -SabNZBdplus $sabUrl -APIKey $sabKey -NZBId $($SelectedDownload.link)) -eq $false)        
+        # Check it's not already been snatched
+       
+        Write-Verbose "Item fits max size"
+
+        if(!(Test-SnatchStatus -guid $($SelectedDownload.guid) -documentDBLocation $documentDBLocation))        
             {
             Write-Verbose "Item not snatched..."
             try
                 {
+                # Create new snatch status Item
+                $SelectedDownload | Add-Member -MemberType NoteProperty -Name snatchDate -Value ((Get-Date).ToString("dd/MM/yyyy HH:mm:ss"))
+                $SelectedDownload | ConvertTo-Json | Out-File -FilePath "$documentDBLocation\$($SelectedDownload.guid).json"
+
+
                 Write-Verbose "-SabNZBdplus $sabUrl -APIKey $sabKey -sabCategory $sabCategory -NZBURL $($SelectedDownload.link)"
                 $downloadAdd = Send-Download -SabNZBdplus $sabUrl -APIKey $sabKey -sabCategory $sabCategory -NZBURL $($SelectedDownload.link) 
                 New-PushalotNotification -AuthorizationToken $PushAuthToken -Title "New result for $searchString Snatched" -Body "$searchString has been snatched`n$($SelectedDownload.title)"  
@@ -89,16 +107,17 @@ Function Global:Get-NewDownload
         else
             {
             Write-Verbose "Item already Snatched"
+            return "Download already snatched: `n$($SelectedDownload | ConvertTo-Json)`n"
+
             }
         }
         else
         {
-        "Download cancelled due to being too large:- `n$($SelectedDownload.FriendlySize) | $maxSize | $intNum"
-         $SelectedDownload
+        Write-Verbose "Got to cancellation"
+        Write-warning "Download cancelled due to being too large:- `n$($SelectedDownload.FriendlySize) | $maxSize | $intNum | $($SelectedDownload | ConvertTo-Json)`n"
+        return "Download cancelled due to being too large"
 
         }
         
 
     }
-
-    
