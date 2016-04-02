@@ -107,6 +107,8 @@ Function Global:Get-NewDownload
         else
             {
             Write-Verbose "Item already Snatched"
+            return "Download already snatched: `n$($SelectedDownload | ConvertTo-Json)`n"
+
             }
         }
         else
