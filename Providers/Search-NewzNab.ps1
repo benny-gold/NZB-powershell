@@ -155,6 +155,7 @@ function Search-Newznab
 
     # Clean up the metadata and create a new array
     $cleanResults = @()
+    $newznabRegex = "http(s)?:\/\/[\s\S]+\/"
 
     foreach($searchResult in $searchResults)
         {
@@ -167,7 +168,7 @@ function Search-Newznab
         $cleanObject | Add-Member -type NoteProperty -name Description -Value $searchResult.description
         $cleanObject | Add-Member -type NoteProperty -name NonFriendlySize -Value $($searchResult).attr[2].value
         $cleanObject | Add-Member -type NoteProperty -name FriendlySize -Value ("{0:N0}" -f (($($searchResult).attr[2].value)/1Mb))
-        $cleanObject | Add-Member -type NoteProperty -name guid -Value ($searchResult.guid.'#text' -replace "https://api.nzbgeek.info/details/","")
+        $cleanObject | Add-Member -type NoteProperty -name guid -Value ($searchResult.guid.'#text' -replace $newznabRegex,"")
         $cleanResults += $cleanObject  
         }
 
