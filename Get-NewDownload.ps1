@@ -115,7 +115,7 @@ Function Global:Get-NewDownload
         {
         Write-Verbose "Got to cancellation"
         Write-warning "Download cancelled due to being too large:- `n$($SelectedDownload.FriendlySize) | $maxSize | $intNum | $($SelectedDownload | ConvertTo-Json)`n"
-        $SelectedDownload | ConvertTo-Json | Out-File -FilePath "$documentDBLocation\$($SelectedDownload.SearchString)_$($SelectedDownload.guid).json"
+        $SelectedDownload | ConvertTo-Json | Out-File -FilePath "$documentDBLocation\large\$($SelectedDownload.SearchString)_$($SelectedDownload.guid).json"
         return "Download cancelled due to being too large"
 
         }
