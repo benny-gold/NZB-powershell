@@ -32,10 +32,6 @@ Function Global:Get-NewDownload
         )
     # Load Resources
 
-   
-    Import-Module "$PSScriptRoot\NZB-Powershell.psd1" -Force
-    
-
     $NZBResults = Search-Newznab -NewzNab $geekURL -APIKey $geekKey -searchString $searchString
 
 
