@@ -23,7 +23,7 @@ Function Global:Get-NewDownload
 
             # Maximum Size to download
             [int]
-            $maxSize=500000,
+            $maxSize=1288490188,
 
             # (filepath) Location of JSON documents for previous snatches
             [string]
@@ -75,7 +75,7 @@ Function Global:Get-NewDownload
     [int]$intNum = [convert]::ToInt32($strNum, 10)
 
 
-    if($SelectedDownload.NonFriendlySize -lt $maxSize)
+    if($intNum -lt $maxSize)
         {
         # Check it's not already been snatched
        
