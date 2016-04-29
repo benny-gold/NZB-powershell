@@ -7,10 +7,12 @@ function Search-Newznab
     Param
         (
         # API URL of NewzNab
+        [Parameter(Mandatory=$true)]
         [String]
         $NewzNab,
 
         # API key of NewzNab
+        [Parameter(Mandatory=$true)]
         [String]
         $APIKey,
     
@@ -18,6 +20,11 @@ function Search-Newznab
         [Parameter(Mandatory=$false)]
         [string]
         $searchString,
+
+        # Language of release
+        [Parameter(Mandatory=$false)]
+        [string]
+        $language,
 
         # amount of days of retention you have
         [int]
@@ -99,14 +106,11 @@ function Search-Newznab
         [parameter(Mandatory=$false, ParameterSetName = "Book")] 
         [string]
         $Author 
-
         )
     
 
     Write-Verbose "Searching $NewzNab for `"$searchString`""
     $NewzNabURL = $NewzNab+"api?apikey=$APIKey"
-
-
 
     # Build out query string
     if($searchString -ne $null)
@@ -138,6 +142,7 @@ function Search-Newznab
         album = 'album'
         label = 'label'
         year = 'year'
+        language = 'language'
         }
 
     foreach($key in $PSBoundParameters.keys)

@@ -23,7 +23,7 @@ Function Global:Get-NewDownload
 
             # Maximum Size to download
             [int]
-            $maxSize=50000,
+            $maxSize=1288490188,
 
             # (filepath) Location of JSON documents for previous snatches
             [string]
@@ -31,10 +31,6 @@ Function Global:Get-NewDownload
 
         )
     # Load Resources
-
-   
-    Import-Module "$PSScriptRoot\NZB-Powershell.psd1" -Force
-    
 
     $NZBResults = Search-Newznab -NewzNab $geekURL -APIKey $geekKey -searchString $searchString
 
@@ -75,7 +71,7 @@ Function Global:Get-NewDownload
 
     Write-Verbose "Convert size to int for comparison"
 
-    [string]$strNum = $SelectedDownload.FriendlySize
+    [string]$strNum = $SelectedDownload.NonFriendlySize
     [int]$intNum = [convert]::ToInt32($strNum, 10)
 
 
