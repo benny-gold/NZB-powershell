@@ -36,7 +36,7 @@ Function Global:Get-NewDownload
             [Parameter(ParameterSetName="LatestSet")] 
             [Parameter(ParameterSetName="LatestOne")]
             [Parameter(ParameterSetName="Interactive")]
-            [int]
+            [int64]
             $maxSizeInBytes=1288490188,
 
             # (filepath) Location of JSON documents for previous snatches
@@ -82,12 +82,28 @@ Function Global:Get-NewDownload
                     $switch += "`n`t $($NZBResults.IndexOf($Download)) {`$SelectedDownloads = `$NZBResults[$($NZBResults.IndexOf($Download))]}"
                     }
                 $switch += "`n}"
-                [int]$userSelectedDownload = Read-Host "Which Item do you want to download?"
-                
-                invoke-expression $switch
+                $userSelectedDownload = Read-Host "Which Item(s) do you want to download?"
+                [array]$userSelectedDownload = $userSelectedDownload -split "," -split " "
+
+                if($userSelectedDownload.Count -gt 1)
+                    {
+                    $SelectedDownloads = @()
+                    foreach($intUserSelectedDownload in $userSelectedDownload)
+                        {
+                        Write-Verbose "Adding $($NZBResults[$intUserSelectedDownload].Title) to selection"
+                        $SelectedDownloads += $NZBResults[$intUserSelectedDownload]
+                        }
+                    }
+                else
+                    {
+
+                    invoke-expression $switch
+                    }                   
                 }
             }
         }
+
+Write-Verbose "Downloading $($SelectedDownloads.title)"
 
 foreach($SelectedDownload in $SelectedDownloads)
     {
@@ -133,7 +149,7 @@ foreach($SelectedDownload in $SelectedDownloads)
             else
                 {
                 Write-Verbose "Item already Snatched"
-                return "Download already snatched: `n$($SelectedDownload | ConvertTo-Json)`n"
+                Write-Output "Download already snatched: `n$($SelectedDownload | ConvertTo-Json)`n"
 
                 }
             }
