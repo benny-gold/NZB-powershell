@@ -105,26 +105,36 @@ function Search-Newznab
         # Author name (URL/UTF-8 encoded). Case insensitive   
         [parameter(Mandatory=$false, ParameterSetName = "Book")] 
         [string]
-        $Author 
+        $Author,
+        
+        [parameter(Mandatory=$false, ParameterSetName = "guid")] 
+        [string]
+        $id 
         )
     
-
-    Write-Verbose "Searching $NewzNab for `"$searchString`""
     $NewzNabURL = $NewzNab+"api?apikey=$APIKey"
 
     # Build out query string
-    if($searchString -ne $null)
+    if($searchString -ne "")
         {
+        Write-Verbose "Addding search string $searchString"
         $encodedSearchString = Invoke-URLEncoding -unencodedString $searchString
         $searchURL = $NewzNabURL+"&q=$($encodedSearchString)"
         }
+    else
+        {
+        $searchString = "PropertySearch"
+        $searchURL = $NewzNabURL
+        }
 
+    Write-Verbose "Searching $NewzNab for `"$searchString`""
     $ParamSet = @{
         book = "&t=book"
         movie = "&t=movie"
         music = "&t=music"
         tv = "&t=tvsearch"
         general = "&t=search"
+        guid = "&t=details"
         }
     
 
@@ -143,6 +153,7 @@ function Search-Newznab
         label = 'label'
         year = 'year'
         language = 'language'
+        id = 'id'
         }
 
     foreach($key in $PSBoundParameters.keys)
@@ -160,12 +171,18 @@ function Search-Newznab
 
     # Clean up the metadata and create a new array
     $cleanResults = @()
-    $newznabRegex = "http(s)?:\/\/[\s\S]+\/"
+    $newznabRegex = "http(s)?:\/\/[\s\S]+\/(\w+\.php\?guid=)?"
 
     foreach($searchResult in $searchResults)
         {
+        Write-Verbose "guid = $($searchResult.guid."#text")"
         $cleanObject = New-Object System.Object
-        $cleanObject | Add-Member -type NoteProperty -name Index -Value $searchResults.indexOf($searchResult)
+        if($searchResults.count -gt 0) {
+            $cleanObject | Add-Member -type NoteProperty -name Index -Value $searchResults.indexOf($searchResult)
+            }
+        else {
+            $cleanObject | Add-Member -type NoteProperty -name Index -Value 0
+            }
         $cleanObject | Add-Member -type NoteProperty -name SearchString -Value $searchString
         $cleanObject | Add-Member -type NoteProperty -name title -Value $searchResult.title      
         $cleanObject | Add-Member -type NoteProperty -name link -Value $searchResult.link       

@@ -18,6 +18,9 @@ Describe "Search-NewzNab" {
     It "Finds a TV show by TVRage ID" {
     (Search-Newznab -NewzNab $geekURL -APIKey $geekKey -TV -TVRageId 23658)[0].description | Should match Workaholics
     }
+    It "Finds an item by GUID" {
+    (Search-Newznab -NewzNab $geekURL -APIKey $geekKey -id 1034899a0cee65f2b57d76b13245b532).description | Should match Daily
+    }
     It "Finds a Thing" {
     (Search-Newznab -NewzNab $geekURL -APIKey $geekKey -searchString "Xbox").count| Should not be 0
     }
