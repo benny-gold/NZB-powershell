@@ -157,7 +157,11 @@ foreach($SelectedDownload in $SelectedDownloads)
             {
             Write-Verbose "Got to cancellation"
             Write-warning "Download cancelled due to being too large:- `n$($SelectedDownload.FriendlySize) | $maxSizeInBytes | $intNum | $($SelectedDownload | ConvertTo-Json)`n"
-            $SelectedDownload | ConvertTo-Json | Out-File -FilePath "$documentDBLocation\large\$($SelectedDownload.SearchString)_$($SelectedDownload.guid).json"
+            $largePath = "$documentDBLocation\large\$($SelectedDownload.SearchString)_$($SelectedDownload.guid).json"
+            if(!(Test-Path $largePath))
+                {
+                $SelectedDownload | ConvertTo-Json | Out-File -FilePath $largePath
+                }
             return "Download cancelled due to being too large"
             }
     }
