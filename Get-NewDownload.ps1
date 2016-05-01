@@ -118,7 +118,7 @@ foreach($SelectedDownload in $SelectedDownloads)
         Write-Verbose "Convert size to int for comparison"
 
         [string]$strNum = $SelectedDownload.NonFriendlySize
-        [int]$intNum = [convert]::ToInt64($strNum, 10)
+        [long]$intNum = [convert]::ToInt64($strNum, 10)
 
 
         if($intNum -lt $maxSizeInBytes)
