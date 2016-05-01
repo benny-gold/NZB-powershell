@@ -139,7 +139,7 @@ foreach($SelectedDownload in $SelectedDownloads)
 
                     Write-Verbose "-SabNZBdplus $sabUrl -APIKey $sabKey -sabCategory $sabCategory -NZBURL $($SelectedDownload.link)"
                     $downloadAdd = Send-Download -SabNZBdplus $sabUrl -APIKey $sabKey -sabCategory $sabCategory -NZBURL $($SelectedDownload.link) 
-                    New-PushalotNotification -AuthorizationToken $PushAuthToken -Title "New result for $searchString Snatched" -Body "$searchString has been snatched`n$($SelectedDownload.title)"  
+                    New-PushalotNotification -AuthorizationToken $PushAuthToken -Title "New result for $searchString Snatched" -Body "$searchString has been snatched`n$($SelectedDownload.title)`n$($SelectedDownload.pubDate)`n$($SelectedDownload.friendlySize)"  
                     }
                 catch
                     {
