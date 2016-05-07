@@ -65,7 +65,7 @@ Function Global:Get-NewDownload
         $zeroSearch = New-Object System.Object
         $zeroSearch | Add-Member -type NoteProperty -name searchString -value $searchString 
         $zeroSearch | Add-Member -type NoteProperty -name searchDate -value $(Get-Date)
-        if(!(Test-Path $largePath))
+        if(!(Test-Path $zeroPath))
             {
             $zeroSearch | ConvertTo-Json | Out-File -FilePath $zeroPath
             }

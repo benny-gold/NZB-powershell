@@ -40,12 +40,6 @@ $RECYCLE.BIN/
 .Trashes
 .VolumeIcon.icns
 
-# Directories potentially created on remote AFP share
-.AppleDB
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk
 secrets.ps1
 tests.ps1
 adhocruns.ps1
