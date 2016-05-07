@@ -18,6 +18,7 @@ Function Global:Get-NewDownload
             [Parameter(Mandatory=$true)]
             [Parameter(ParameterSetName="LatestSet")] 
             [Parameter(ParameterSetName="LatestOne")]
+            [Parameter(ParameterSetName="ResultsOnly")]
             [Parameter(ParameterSetName="Interactive")]      
             [string]
             $searchString,
@@ -35,6 +36,7 @@ Function Global:Get-NewDownload
             # Maximum Size to download. Default is 1.2gb
             [Parameter(ParameterSetName="LatestSet")] 
             [Parameter(ParameterSetName="LatestOne")]
+            [Parameter(ParameterSetName="ResultsOnly")]
             [Parameter(ParameterSetName="Interactive")]
             [int64]
             $maxSizeInBytes=1288490188,
@@ -42,24 +44,39 @@ Function Global:Get-NewDownload
             # (filepath) Location of JSON documents for previous snatches
             [Parameter(ParameterSetName="LatestSet")] 
             [Parameter(ParameterSetName="LatestOne")]
+            [Parameter(ParameterSetName="ResultsOnly")]
             [Parameter(ParameterSetName="Interactive")]
             [Parameter(Mandatory=$true)]
             [string]
-            $documentDBLocation
+            $documentDBLocation,
+
+            # only display results
+            [Parameter(ParameterSetName="ResultsOnly")]
+            [Parameter(Mandatory=$false)]
+            [switch]
+            $ResultsOnly
 
         )
     # Load Resources
 
     $NZBResults = Search-Newznab -NewzNab $geekURL -APIKey $geekKey -searchString $searchString
     if($NZBResults.count -eq 0){
+        $zeroPath = "$documentDBLocation\zero\$searchString.json"
+        $zeroSearch = New-Object System.Object
+        $zeroSearch | Add-Member -type NoteProperty -name searchString -value $searchString 
+        $zeroSearch | Add-Member -type NoteProperty -name searchDate -value $(Get-Date)
+        if(!(Test-Path $largePath))
+            {
+            $zeroSearch | ConvertTo-Json | Out-File -FilePath $zeroPath
+            }
+
         return "No Results for $searchString"
         }
-        
-
     # Interactive or automated? Get the download you want. 
-    if($NZBResults.count -eq 1)
+    elseif($NZBResults.count -eq 1)
         {
         $SelectedDownloads = $NZBResults
+        Write-Warning "Only 1 result. Snatching..."
         }
     else
         {
@@ -70,6 +87,10 @@ Function Global:Get-NewDownload
                 }
             "LatestOne" {
                 $SelectedDownloads = $NZBResults[0]
+                }            
+            "ResultsOnly" {
+                $SelectedDownloads = $NZBResults
+                return $SelectedDownloads
                 }
             "Interactive" {
                 $number = 0
@@ -103,68 +124,68 @@ Function Global:Get-NewDownload
             }
         }
 
-Write-Verbose "Downloading $($SelectedDownloads.title)"
+    Write-Verbose "Downloading $($SelectedDownloads.title)"
 
-foreach($SelectedDownload in $SelectedDownloads)
-    {
-        Write-Verbose ($SelectedDownload | ConvertTo-Json)
+    foreach($SelectedDownload in $SelectedDownloads)
+        {
+            Write-Verbose ($SelectedDownload | ConvertTo-Json)
 
-        # Figure out category
+            # Figure out category
 
-        $sabCategory = Get-DownloadCategory -Category $SelectedDownload.Category
+            $sabCategory = Get-DownloadCategory -Category $SelectedDownload.Category
     
-        # Convert size to int for comparison
+            # Convert size to int for comparison
 
-        Write-Verbose "Convert size to int for comparison"
+            Write-Verbose "Convert size to int for comparison"
 
-        [string]$strNum = $SelectedDownload.NonFriendlySize
-        [long]$intNum = [convert]::ToInt64($strNum, 10)
+            [string]$strNum = $SelectedDownload.NonFriendlySize
+            [long]$intNum = [convert]::ToInt64($strNum, 10)
 
 
-        if($intNum -lt $maxSizeInBytes)
-            {
-            # Check it's not already been snatched
+            if($intNum -lt $maxSizeInBytes)
+                {
+                # Check it's not already been snatched
        
-            Write-Verbose "Item fits max size"
+                Write-Verbose "Item fits max size"
 
-            if(!(Test-SnatchStatus -guid $($SelectedDownload.guid) -documentDBLocation $documentDBLocation))        
-                {
-                Write-Verbose "Item not snatched..."
-                try
+                if(!(Test-SnatchStatus -guid $($SelectedDownload.guid) -documentDBLocation $documentDBLocation))        
                     {
-                    # Create new snatch status Item
-                    $SelectedDownload | Add-Member -MemberType NoteProperty -Name snatchDate -Value ((Get-Date).ToString("dd/MM/yyyy HH:mm:ss"))
-                    $SelectedDownload | ConvertTo-Json | Out-File -FilePath "$documentDBLocation\$($SelectedDownload.guid).json"
+                    Write-Verbose "Item not snatched..."
+                    try
+                        {
+                        # Create new snatch status Item
+                        $SelectedDownload | Add-Member -MemberType NoteProperty -Name snatchDate -Value ((Get-Date).ToString("dd/MM/yyyy HH:mm:ss"))
+                        $SelectedDownload | ConvertTo-Json | Out-File -FilePath "$documentDBLocation\$($SelectedDownload.guid).json"
 
 
-                    Write-Verbose "-SabNZBdplus $sabUrl -APIKey $sabKey -sabCategory $sabCategory -NZBURL $($SelectedDownload.link)"
-                    $downloadAdd = Send-Download -SabNZBdplus $sabUrl -APIKey $sabKey -sabCategory $sabCategory -NZBURL $($SelectedDownload.link) 
-                    New-PushalotNotification -AuthorizationToken $PushAuthToken -Title "New result for $searchString Snatched" -Body "$searchString has been snatched`n$($SelectedDownload.title)`n$($SelectedDownload.pubDate)`n$($SelectedDownload.friendlySize)"  
+                        Write-Verbose "-SabNZBdplus $sabUrl -APIKey $sabKey -sabCategory $sabCategory -NZBURL $($SelectedDownload.link)"
+                        $downloadAdd = Send-Download -SabNZBdplus $sabUrl -APIKey $sabKey -sabCategory $sabCategory -NZBURL $($SelectedDownload.link) 
+                        New-PushalotNotification -AuthorizationToken $PushAuthToken -Title "New result for $searchString Snatched" -Body "$searchString has been snatched`n$($SelectedDownload.title)`n$($SelectedDownload.pubDate)`n$($SelectedDownload.friendlySize)"  
+                        }
+                    catch
+                        {
+                        New-PushalotNotification -AuthorizationToken $PushAuthToken -Title "New result for $searchString failed to download!" -Body "$searchString has been found but the download failed. `n$($SelectedDownload.title)`n$($SelectedDownload.link)`n$($_.Exception)" -IsImportant $True
+                        }
                     }
-                catch
+                else
                     {
-                    New-PushalotNotification -AuthorizationToken $PushAuthToken -Title "New result for $searchString failed to download!" -Body "$searchString has been found but the download failed. `n$($SelectedDownload.title)`n$($SelectedDownload.link)`n$($_.Exception)" -IsImportant $True
+                    Write-Verbose "Item already Snatched"
+                    Write-Output "Download already snatched: `n$($SelectedDownload | ConvertTo-Json)`n"
+
                     }
                 }
-            else
+                else
                 {
-                Write-Verbose "Item already Snatched"
-                Write-Output "Download already snatched: `n$($SelectedDownload | ConvertTo-Json)`n"
-
+                Write-Verbose "Got to cancellation"
+                Write-warning "Download cancelled due to being too large:- `n$($SelectedDownload.FriendlySize) | $maxSizeInBytes | $intNum | $($SelectedDownload | ConvertTo-Json)`n"
+                $largePath = "$documentDBLocation\large\$($SelectedDownload.SearchString)_$($SelectedDownload.guid).json"
+                if(!(Test-Path $largePath))
+                    {
+                    $SelectedDownload | ConvertTo-Json | Out-File -FilePath $largePath
+                    }
+                return "Download cancelled due to being too large"
                 }
-            }
-            else
-            {
-            Write-Verbose "Got to cancellation"
-            Write-warning "Download cancelled due to being too large:- `n$($SelectedDownload.FriendlySize) | $maxSizeInBytes | $intNum | $($SelectedDownload | ConvertTo-Json)`n"
-            $largePath = "$documentDBLocation\large\$($SelectedDownload.SearchString)_$($SelectedDownload.guid).json"
-            if(!(Test-Path $largePath))
-                {
-                $SelectedDownload | ConvertTo-Json | Out-File -FilePath $largePath
-                }
-            return "Download cancelled due to being too large"
-            }
-    }
-        
+        }
+    
 
 }
