@@ -62,9 +62,15 @@ Function Global:Get-NewDownload
     $NZBResults = Search-Newznab -NewzNab $geekURL -APIKey $geekKey -searchString $searchString
     if($NZBResults.count -eq 0){
         $zeroPath = "$documentDBLocation\zero\$searchString.json"
-        $zeroSearch = New-Object System.Object
-        $zeroSearch | Add-Member -type NoteProperty -name searchString -value $searchString 
-        $zeroSearch | Add-Member -type NoteProperty -name searchDate -value $(Get-Date)
+        class ZeroSearch
+            {
+            [string]$searchString
+            [datetime]$searchDate
+            }
+        $zeroSearchObject = New-Object ZeroSearch
+        $zeroSearchObject.searchString = $searchString 
+        $zeroSearchObject.searchDate = Get-Date
+
         if(!(Test-Path $zeroPath))
             {
             $zeroSearch | ConvertTo-Json | Out-File -FilePath $zeroPath

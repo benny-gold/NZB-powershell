@@ -6,22 +6,38 @@
     [string]$MovieName
     )
 
+    class Movie
+        {
+        [string]$Title
+        [int]$Year
+        [string]$Rated
+        [datetime]$Released
+        [string]$Runtime
+        [string]$Director
+        [string]$Plot
+        [string]$Language
+        [string]$Actors
+        [string]$Poster
+        [double]$imdbRating
+        [int]$imdbID
+        }
+
     $movieResults = Invoke-RestMethod "http://www.omdbapi.com/?t=$($MovieName)&type=movie&plot=full"
     
-    $movieObject = New-Object System.Object
-    $movieObject | Add-Member -type NoteProperty -name Title -value $movieResults.Title
-    $movieObject | Add-Member -type NoteProperty -name Year -value $movieResults.Year
-    $movieObject | Add-Member -type NoteProperty -name Rated -value $movieResults.Rated
-    $movieObject | Add-Member -type NoteProperty -name Released -value $movieResults.Released
-    $movieObject | Add-Member -type NoteProperty -name Runtime -value $movieResults.Runtime
-    $movieObject | Add-Member -type NoteProperty -name Director -value $movieResults.Director
-    $movieObject | Add-Member -type NoteProperty -name Plot -value $movieResults.Plot
-    $movieObject | Add-Member -type NoteProperty -name Language -value $movieResults.Language
-    $movieObject | Add-Member -type NoteProperty -name Actors -value $movieResults.Actors
-    $movieObject | Add-Member -type NoteProperty -name Poster -value $movieResults.Poster
-    $movieObject | Add-Member -type NoteProperty -name imdbRating -value $movieResults.imdbRating
-    $movieObject | Add-Member -type NoteProperty -name imdbID -value ($movieResults.imdbID -replace "tt","")
+    $movieObject = New-Object Movie
+    $movieObject.Title = $movieResults.Title
+    $movieObject.Year = $movieResults.Year
+    $movieObject.Rated = $movieResults.Rated
+    $movieObject.Released = $movieResults.Released
+    $movieObject.Runtime = $movieResults.Runtime
+    $movieObject.Director = $movieResults.Director
+    $movieObject.Plot = $movieResults.Plot
+    $movieObject.Language = $movieResults.Language
+    $movieObject.Actors = $movieResults.Actors
+    $movieObject.Poster = $movieResults.Poster
+    $movieObject.imdbRating = $movieResults.imdbRating
+    $movieObject.imdbID = ($movieResults.imdbID -replace "tt","")
 
-    $movieObject
+    return $movieObject
 }
 
