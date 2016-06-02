@@ -173,25 +173,41 @@ function Search-Newznab
     $cleanResults = @()
     $newznabRegex = "http(s)?:\/\/[\s\S]+\/(\w+\.php\?guid=)?"
 
+    class CleanObject
+        {
+        [int]$index
+        [string]$SearchString
+        [string]$title
+        [string]$link
+        [datetime]$pubDate
+        [string]$category
+        [string]$Description
+        [long]$NonFriendlySize
+        [string]$FriendlySize
+        [string]$guid
+        }
+
+
     foreach($searchResult in $searchResults)
         {
         Write-Verbose "guid = $($searchResult.guid."#text")"
-        $cleanObject = New-Object System.Object
+        $cleanObject = New-Object CleanObject
         if($searchResults.count -gt 0) {
-            $cleanObject | Add-Member -type NoteProperty -name Index -Value $searchResults.indexOf($searchResult)
+            $cleanObject.index = $searchResults.indexOf($searchResult)
             }
         else {
-            $cleanObject | Add-Member -type NoteProperty -name Index -Value 0
+            $cleanObject.index = 0
             }
-        $cleanObject | Add-Member -type NoteProperty -name SearchString -Value $searchString
-        $cleanObject | Add-Member -type NoteProperty -name title -Value $searchResult.title      
-        $cleanObject | Add-Member -type NoteProperty -name link -Value $searchResult.link       
-        $cleanObject | Add-Member -type NoteProperty -name pubDate -Value $([DateTime]::Parse($searchResult.pubDate))
-        $cleanObject | Add-Member -type NoteProperty -name category -Value $searchResult.category 
-        $cleanObject | Add-Member -type NoteProperty -name Description -Value $searchResult.description
-        $cleanObject | Add-Member -type NoteProperty -name NonFriendlySize -Value $($searchResult).attr[2].value
-        $cleanObject | Add-Member -type NoteProperty -name FriendlySize -Value ("{0:N0}" -f (($($searchResult).attr[2].value)/1Mb))
-        $cleanObject | Add-Member -type NoteProperty -name guid -Value ($searchResult.guid.'#text' -replace $newznabRegex,"")
+        $cleanObject.SearchString = $searchString
+        $cleanObject.title = $searchResult.title      
+        $cleanObject.link = $searchResult.link       
+        $cleanObject.pubDate = $([DateTime]::Parse($searchResult.pubDate))
+        $cleanObject.category = $searchResult.category 
+        $cleanObject.Description = $searchResult.description
+        $cleanObject.NonFriendlySize = $($searchResult).attr[2].value
+        $cleanObject.FriendlySize = ("{0:N0}" -f (($($searchResult).attr[2].value)/1Mb))
+        $cleanObject.guid = ($searchResult.guid.'#text' -replace $newznabRegex,"")
+
         $cleanResults += $cleanObject  
         }
 
