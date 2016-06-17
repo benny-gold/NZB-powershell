@@ -7,7 +7,7 @@ Describe "Search-NewzNab" {
     (Search-Newznab -NewzNab $geekURL -APIKey $geekKey -searchString "Avengers" -Movie).count | Should not be 0
     }
     It "Finds a Movie by IMDB ID" {
-    (Search-Newznab -NewzNab $geekURL -APIKey $geekKey -Movie -IMDBId 3659388 -language English)[1].description | Should Match Martian
+    (Search-Newznab -NewzNab $geekURL -APIKey $geekKey -Movie -IMDBId 3659388 -language English)[-1].description | Should Match Martian
     }
     It "Finds an Album by Artist" {
     (Search-Newznab -NewzNab $geekURL -APIKey $geekKey -Music -Artist Kanye).count | Should not be 0
