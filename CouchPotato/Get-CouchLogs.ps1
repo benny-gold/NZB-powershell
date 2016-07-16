@@ -38,8 +38,8 @@
         foreach($logEntry in $logs.log)
             {
             $logObject = New-Object -TypeName couchLog
-            $logObject.logCategory = $logEntry.message -replace '(\[(?:\w+\.)+\w+\])(\s)([\s\S]+)',"`$1"
-            $logObject.logMessage = $logEntry.message -replace '(\[(?:\w+\.)+\w+\])(\s)([\s\S]+)',"`$3"
+            $logObject.logCategory = $logEntry.message -replace '(\[(?:[\.|\w|\s]+\.)+\w+\])(\s)([\s\S]+)',"`$1"
+            $logObject.logMessage = $logEntry.message -replace '(\[(?:[\.|\w|\s]+\.)+\w+\])(\s)([\s\S]+)',"`$3"
 
             $logObject.logDate = [datetime]::ParseExact($($logEntry.time), "MM-dd HH:mm:ss", [System.Globalization.CultureInfo]::InvariantCulture, [System.Globalization.DateTimeStyles]::None)
 
