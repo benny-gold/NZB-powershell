@@ -14,20 +14,38 @@
 
         # Couchpotato's renamer doesn't work. This function forces a restart after each item is moved. It stops when the "From" path is empty.
 
+        do{
+          $renamerlog = Get-CouchLogs -couchUrl $couchUrl -couchApiKey $couchApiKey -lines 1 -logType all 
+          }
+        until($renamerlog.logCategory -like "[tato.core.plugins.renamer]" -and $renamerlog.logMessage -match "Moving `"")
 
-        $onlineEndpoint = "app.available"
-        $settingsEndpoint = "settings"
-        $restartEndpoint = "app.restart"
-        $loggingEndpoint = "logging.partial"
+        Write-Warning "Move in Progress..."
+        Start-Sleep -Seconds 60
+        
+        do{
+          $renamerlog = Get-CouchLogs -couchUrl $couchUrl -couchApiKey $couchApiKey -lines 1 -logType all 
+          }
+        until($renamerlog.logCategory -like "[hpotato.core.plugins.base]" -and $renamerlog.logMessage -match "Opening url:")
 
-        $logs = Invoke-RestMethod "$CouchURL/api/$couchApiKey/$endpoint"
 
+        
+        Write-Warning "Restarting!"
+        Start-Sleep -Seconds 30
+        Restart-CouchPotato -couchUrl $couchUrl -couchApiKey $couchApiKey 
+          
+        do{
+          $restartComplete = Test-CouchOnline -couchUrl $couchUrl -couchApiKey $couchApiKey
+          }
+        until($restartComplete.success -like $True)
+        
 }
 
 
+$couchPSettings = Get-CouchSettings -couchUrl $CouchURL -couchApiKey $couchKey
 
+do{
+    Invoke-CouchPotatoRename -couchUrl $CouchURL -couchApiKey $CouchAPIKey
+    $moviesLeft = (gci $couchPSettings.values.renamer.from)
+  }
+until($moviesLeft.Count -lt 5)
 
-
-
-$online= Invoke-RestMethod http://10.124.10.70:5050/api/72ab356eb38049efbf0c996e4ba80c68/app.available
-$online.success
