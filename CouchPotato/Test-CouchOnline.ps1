@@ -11,13 +11,9 @@
         $couchApiKey
         )
 
-        # Couchpotato's renamer doesn't work. This function forces a restart after each item is moved. It stops when the "From" path is empty.
-
-
         $onlineEndpoint = "app.available"
-        $settingsEndpoint = "settings"
-        $restartEndpoint = "app.restart"
-        $loggingEndpoint = "logging.partial"
 
-        $logs = Invoke-RestMethod "$CouchURL/api/$couchApiKey/$endpoint"
+
+        $online = Invoke-RestMethod "$CouchURL/api/$couchApiKey/$onlineendpoint"
+        return $online 
 }
