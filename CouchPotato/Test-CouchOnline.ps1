@@ -17,3 +17,5 @@
         $online = Invoke-RestMethod "$CouchURL/api/$couchApiKey/$onlineendpoint"
         return $online 
 }
+
+

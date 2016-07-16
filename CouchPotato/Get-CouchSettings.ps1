@@ -1,4 +1,4 @@
-﻿function Restart-CouchPotato {
+﻿function Get-CouchSettings {
     [OutputType([Object])]
         Param
         (
@@ -10,10 +10,11 @@
         [string]
         $couchApiKey
         )
+        
+        
+        $settingsEndpoint = "settings"
 
 
-        $restartEndpoint = "app.restart"
-      
-        $restart = Invoke-RestMethod "$CouchURL/api/$couchApiKey/$restartEndpoint"
-        return $restartEndpoint
+        $settings = Invoke-RestMethod "$CouchURL/api/$couchApiKey/$settingsEndpoint"
+        return $settings 
 }
