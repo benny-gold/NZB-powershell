@@ -1,4 +1,5 @@
-﻿function Test-CouchOnline {
+﻿function Invoke-CouchPotatoRename 
+    {
     [OutputType([Object])]
         Param
         (
@@ -20,4 +21,13 @@
         $loggingEndpoint = "logging.partial"
 
         $logs = Invoke-RestMethod "$CouchURL/api/$couchApiKey/$endpoint"
+
 }
+
+
+
+
+
+
+$online= Invoke-RestMethod http://10.124.10.70:5050/api/72ab356eb38049efbf0c996e4ba80c68/app.available
+$online.success
