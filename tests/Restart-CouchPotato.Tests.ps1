@@ -4,7 +4,7 @@ Import-Module "$here\..\NZB-Powershell" -Force
 
 
 Describe "Restart-CouchPotato" {
-    It "does something useful" {
-        $true | Should Be $false
+    It "Should Restart Couch" {
+       (Restart-CouchPotato -couchURL $CouchURL -couchApiKey $couchKey).success | Should match "app.restart"
     }
 }
