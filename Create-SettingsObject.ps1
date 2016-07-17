@@ -34,7 +34,6 @@ Class AdewaleSettings{
     [AdewaleHelperSettings]$HelperSettings
     }
 
-
 $sonarrSettings = New-Object -TypeName AdewaleSonarrSettings
 $sonarrSettings.SonarrURL = $SonarrURL
 $sonarrSettings.SonarrKey = $SonarrKey
@@ -64,6 +63,5 @@ $AdewaleSettings.CouchSettings = $couchSettings
 $AdewaleSettings.HelperSettings = $HelperSettings
 $AdewaleSettings.SabSettings = $sabSettings
 $AdewaleSettings.SonarrSettings = $sonarrSettings
-
 
 return $AdewaleSettings
