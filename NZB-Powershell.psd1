@@ -12,7 +12,7 @@
 RootModule = "$psscriptroot\NZB-Powershell.psm1"
 
 # Version number of this module.
-ModuleVersion = '1.0.0.84'
+ModuleVersion = '1.0.0.91'
 
 # ID used to uniquely identify this module
 GUID = 'fef43043-7d3b-4ad5-9a7c-6478aba9a102'
