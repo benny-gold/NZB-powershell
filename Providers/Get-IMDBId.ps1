@@ -23,7 +23,7 @@
         }
 
     $movieResults = Invoke-RestMethod "http://www.omdbapi.com/?t=$($MovieName)&type=movie&plot=full"
-    if($imdbDetails.count -eq 0) {
+    if($movieResults.count -eq 0) {
         "No Results Found"
         return
         }
