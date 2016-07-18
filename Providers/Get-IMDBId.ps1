@@ -23,7 +23,10 @@
         }
 
     $movieResults = Invoke-RestMethod "http://www.omdbapi.com/?t=$($MovieName)&type=movie&plot=full"
-    
+    if($movieResults.count -eq 0) {
+        "No Results Found"
+        return
+        }
     $movieObject = New-Object Movie
     $movieObject.Title = $movieResults.Title
     $movieObject.Year = $movieResults.Year
