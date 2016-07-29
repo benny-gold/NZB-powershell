@@ -1,0 +1,3 @@
+[submodule "powershell-notifications"]
+	path = powershell-notifications
+	url = https://github.com/benny-gold/powershell-notifications

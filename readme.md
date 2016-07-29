@@ -59,7 +59,7 @@ Usage
 3. Get-Categories
 4. Search-NewzNab
 
-**Notifications**
+**[Notifications](https://github.com/benny-gold/powershell-notifications)**
 
 1. New-PushalotNotification
 2. Send-MailgunMessage

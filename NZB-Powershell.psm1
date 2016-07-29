@@ -1,5 +1,4 @@
 ﻿Gci "$PSScriptRoot\CouchPotato\*.ps1" | ForEach-Object {. $_.FullName}
-Gci "$PSScriptRoot\Notifications\*.ps1" | ForEach-Object {. $_.FullName}
 Gci "$PSScriptRoot\Providers\*.ps1" | ForEach-Object {. $_.FullName}
 Gci "$PSScriptRoot\Sonarr\*.ps1" | ForEach-Object {. $_.FullName}
 Gci "$PSScriptRoot\SabNZBd+\*.ps1" | ForEach-Object {. $_.FullName}
