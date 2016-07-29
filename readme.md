@@ -41,11 +41,16 @@ Usage
 **CouchPotato**
 
 1. Add-CouchpotatoMovie
+2. Get-CouchLogs
+3. Get-CouchSettings
+4. Restart-CouchPotato
+5. Test-CouchOnline
 
 **Sonarr**
 		
 1. Get-SonarrSeries
 2. Add-SonarrSeries
+3. Get-SonarrCalendar
 
 **Providers**
 
@@ -64,6 +69,11 @@ Usage
 1. Get-DownloadCategory	
 2. Send-Download
 3. Get-SabNZBdHistory
+
+**Helper Functions**
+1. Test-SnatchStatus
+2. Invoke-URLEncoding
+3. Set-Categories
 
 **Multi-Tool**
 	
