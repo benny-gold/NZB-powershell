@@ -67,9 +67,10 @@ Invoke-Pester -OutputFormat NUnitXml -OutputFile Tests.xml"""
         }
         feature {
             type = "commit-status-publisher"
-            param("github_authentication_type","token")
+            param("github_authentication_type","password")
             param("github_host","https://api.github.com")
-            param("github_username","benny-gold")
+            param("github_username","benny-gold")           
+            param("github_password","%github.build.status%")
             param("publisherId","githubStatusPublisher")
             param("vcsRootId","NzbPowershell_NZBPowershell")
         }
