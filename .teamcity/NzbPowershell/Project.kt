@@ -48,7 +48,7 @@ object Project : Project({
         versionedSettings {
             id = "PROJECT_EXT_5"
             mode = VersionedSettings.Mode.ENABLED
-            buildSettingsMode = VersionedSettings.BuildSettingsMode.USE_VCS_SETTINGS
+            buildSettingsMode = VersionedSettings.BuildSettingsMode.PREFER_VCS
             rootExtId = NzbPowershell_NZBPowershell.extId
             showChanges = true
             settingsFormat = VersionedSettings.Format.KOTLIN
