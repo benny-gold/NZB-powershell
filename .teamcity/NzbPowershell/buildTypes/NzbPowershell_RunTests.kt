@@ -55,8 +55,6 @@ Invoke-Pester -OutputFormat NUnitXml -OutputFile Tests.xml"""
     }
 
     triggers {
-        vcs {
-        }
     }
 
     features {
