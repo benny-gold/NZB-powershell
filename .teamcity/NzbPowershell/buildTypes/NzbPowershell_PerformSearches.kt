@@ -32,7 +32,7 @@ foreach (${'$'}newjob in ${'$'}newjobs)
 Get-NewDownload -searchString ${'$'}newjob -FilterLatest -documentDBLocation ${'$'}documentDBLocation 
 }"""
             }
-            noProfile = false
+            param("jetbrains_powershell_noprofile", "")
         }
     }
 
@@ -42,8 +42,8 @@ Get-NewDownload -searchString ${'$'}newjob -FilterLatest -documentDBLocation ${'
                 hours = "0/3"
             }
             triggerBuild = always()
-            withPendingChangesOnly = false
             param("revisionRule", "lastFinished")
+            param("triggerBuildWithPendingChangesOnly", "")
             param("dayOfWeek", "Sunday")
         }
     }

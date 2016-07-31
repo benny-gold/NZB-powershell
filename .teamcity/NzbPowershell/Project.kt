@@ -18,7 +18,7 @@ object Project : Project({
     name = "NZB Powershell"
 
     vcsRoot(NzbPowershell_NZBPowershell)
-
+    vcsRoot(NzbPowershell_Adewale)
 
     buildType(NzbPowershell_PerformSearches)
     buildType(NzbPowershell_RunTests)
@@ -31,7 +31,7 @@ object Project : Project({
             param("displayName", "GitHub.com")
             param("gitHubUrl", "https://github.com/")
             param("providerType", "GitHub")
-            param("secure:clientSecret", "%github.client.secret%")
+            param("secure:clientSecret", "zxx4a1e47b0afadb54dd5cffdee450443841f1f29137aae1c17")
         }
         feature {
             id = "PROJECT_EXT_2"
@@ -40,15 +40,15 @@ object Project : Project({
             param("name", "GH NZB Issues")
             param("pattern", """#(\d+)""")
             param("repository", "https://github.com/benny-gold/NZB-powershell")
-            param("secure:accessToken", "%github.access.key.public%")
-            param("secure:password", "%github.access.key.public%")
+            param("secure:accessToken", "zxx870c147121dd52201ffd26dcf5b0238d26070271068eecbc24807d781701d2e6")
+            param("secure:password", "zxx870c147121dd52201ffd26dcf5b0238d26070271068eecbc24807d781701d2e6")
             param("type", "GithubIssues")
             param("username", "")
         }
         versionedSettings {
             id = "PROJECT_EXT_5"
             mode = VersionedSettings.Mode.ENABLED
-            buildSettingsMode = VersionedSettings.BuildSettingsMode.PREFER_VCS
+            buildSettingsMode = VersionedSettings.BuildSettingsMode.PREFER_SETTINGS_FROM_VCS
             rootExtId = NzbPowershell_NZBPowershell.extId
             showChanges = true
             settingsFormat = VersionedSettings.Format.KOTLIN

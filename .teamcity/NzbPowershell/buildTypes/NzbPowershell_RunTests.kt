@@ -55,6 +55,8 @@ Invoke-Pester -OutputFormat NUnitXml -OutputFile Tests.xml"""
     }
 
     triggers {
+        vcs {
+        }
     }
 
     features {
@@ -62,14 +64,6 @@ Invoke-Pester -OutputFormat NUnitXml -OutputFile Tests.xml"""
             type = "xml-report-plugin"
             param("xmlReportParsing.reportDirs", "Tests.xml")
             param("xmlReportParsing.reportType", "nunit")
-        }
-        feature {
-            type = "commit-status-publisher"
-            param("github_authentication_type","token")
-            param("github_host","https://api.github.com")
-            param("github_username","benny-gold")
-            param("publisherId","githubStatusPublisher")
-            param("vcsRootId","NzbPowershell_NZBPowershell")
         }
     }
 })

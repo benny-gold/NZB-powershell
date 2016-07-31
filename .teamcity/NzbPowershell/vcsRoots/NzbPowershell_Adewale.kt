@@ -3,12 +3,11 @@ package NzbPowershell.vcsRoots
 import jetbrains.buildServer.configs.kotlin.v10.*
 import jetbrains.buildServer.configs.kotlin.v10.vcs.GitVcsRoot
 
-object NzbPowershell_NZBPowershell : GitVcsRoot({
-    uuid = "77f92c96-266f-4327-81cb-f9543426c4dc"
-    extId = "NzbPowershell_NZBPowershell"
-    name = "NZBPowershell"
-    url = "git@github.com:benny-gold/NZB-powershell.git"
-    branchSpec = "+:refs/heads/*"
+object NzbPowershell_Adewale : GitVcsRoot({
+    uuid = "31a85483-ab4c-40e2-9987-2225858d5426"
+    extId = "NzbPowershell_Adewale"
+    name = "Adewale"
+    url = "git@github.com:benny-gold/Adewale.git"
     authMethod = customPrivateKey {
         customKeyPath = """C:\Users\ben\OneDrive\Keys\Anyteamcity.ppk"""
     }
