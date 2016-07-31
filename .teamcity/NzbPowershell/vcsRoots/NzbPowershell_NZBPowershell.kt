@@ -8,7 +8,7 @@ object NzbPowershell_NZBPowershell : GitVcsRoot({
     extId = "NzbPowershell_NZBPowershell"
     name = "NZBPowershell"
     url = "git@github.com:benny-gold/NZB-powershell.git"
-    branchSpec = "+:refs/heads/* +:refs/pull/*/"
+    branchSpec = "+:refs/heads/* +:refs/pull/(*/merge)"
     authMethod = customPrivateKey {
         customKeyPath = """C:\Users\ben\OneDrive\Keys\Anyteamcity.ppk"""
     }
