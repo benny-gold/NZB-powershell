@@ -31,7 +31,7 @@ object Project : Project({
             param("displayName", "GitHub.com")
             param("gitHubUrl", "https://github.com/")
             param("providerType", "GitHub")
-            param("secure:clientSecret", "%gihtub.client.secret%")
+            param("secure:clientSecret", "%github.client.secret%")
         }
         feature {
             id = "PROJECT_EXT_2"
@@ -48,7 +48,7 @@ object Project : Project({
         versionedSettings {
             id = "PROJECT_EXT_5"
             mode = VersionedSettings.Mode.ENABLED
-            buildSettingsMode = VersionedSettings.BuildSettingsMode.VCS
+            buildSettingsMode = VersionedSettings.BuildSettingsMode.PREFER_VCS
             rootExtId = NzbPowershell_NZBPowershell.extId
             showChanges = true
             settingsFormat = VersionedSettings.Format.KOTLIN
