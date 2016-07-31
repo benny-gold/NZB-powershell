@@ -18,7 +18,7 @@ object Project : Project({
     name = "NZB Powershell"
 
     vcsRoot(NzbPowershell_NZBPowershell)
-    vcsRoot(NzbPowershell_Adewale)
+
 
     buildType(NzbPowershell_PerformSearches)
     buildType(NzbPowershell_RunTests)
@@ -48,7 +48,7 @@ object Project : Project({
         versionedSettings {
             id = "PROJECT_EXT_5"
             mode = VersionedSettings.Mode.ENABLED
-            buildSettingsMode = VersionedSettings.BuildSettingsMode.PREFER_VCS_SETTINGS
+            buildSettingsMode = VersionedSettings.BuildSettingsMode.VCS
             rootExtId = NzbPowershell_NZBPowershell.extId
             showChanges = true
             settingsFormat = VersionedSettings.Format.KOTLIN
