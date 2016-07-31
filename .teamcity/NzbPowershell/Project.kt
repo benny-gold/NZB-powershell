@@ -31,7 +31,7 @@ object Project : Project({
             param("displayName", "GitHub.com")
             param("gitHubUrl", "https://github.com/")
             param("providerType", "GitHub")
-            param("secure:clientSecret", "%gihtub.client.secret%")
+            param("secure:clientSecret", "%github.client.secret%")
         }
         feature {
             id = "PROJECT_EXT_2"
