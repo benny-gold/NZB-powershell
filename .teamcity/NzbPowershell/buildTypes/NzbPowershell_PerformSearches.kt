@@ -24,7 +24,7 @@ object NzbPowershell_PerformSearches : BuildType({
             executionMode = BuildStep.ExecutionMode.RUN_ON_FAILURE
             platform = PowerShellStep.Platform.x64
             scriptMode = script {
-                content = """${'$'}newjobs  = "chantelle fox","Dancing Bear","FakeAgentUK","FakeTaxi","Penny Lee","Tasha Holz","Kerry Louise","pureCFNM","czech streets","czech casting","Barbie Bangs","Nina Kayy","Czech Couples","Akira Lane","Money Talks","Lilly Romanski","Ruby Summers","Tashie Jackson","Katie richies","Sara Willis","Beth Bennett","Esmi Lee"
+                content = """${'$'}newjobs  = get-content C:\tweets\searches.txt
 Import-Module .\NZB-Powershell.psd1 -force
 ${'$'}documentDBLocation = "C:\tweets\downloads"
 foreach (${'$'}newjob in ${'$'}newjobs)

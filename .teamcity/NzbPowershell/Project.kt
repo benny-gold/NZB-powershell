@@ -31,7 +31,7 @@ object Project : Project({
             param("displayName", "GitHub.com")
             param("gitHubUrl", "https://github.com/")
             param("providerType", "GitHub")
-            param("secure:clientSecret", "zxx3c7203959580b35a19a8422918b6c7b83fd8038d8d806a0af893a970ea839480975e5c635568c796775d03cbe80d301b")
+            param("secure:clientSecret", "%gihtub.client.secret%")
         }
         feature {
             id = "PROJECT_EXT_2"
@@ -40,8 +40,8 @@ object Project : Project({
             param("name", "GH NZB Issues")
             param("pattern", """#(\d+)""")
             param("repository", "https://github.com/benny-gold/NZB-powershell")
-            param("secure:accessToken", "zxx775d03cbe80d301b")
-            param("secure:password", "zxx775d03cbe80d301b")
+            param("secure:accessToken", "%github.access.key.public%")
+            param("secure:password", "%github.access.key.public%")
             param("type", "GithubIssues")
             param("username", "")
         }
