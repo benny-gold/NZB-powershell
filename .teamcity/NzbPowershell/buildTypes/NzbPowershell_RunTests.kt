@@ -30,7 +30,6 @@ Classes.ps1"""
 
     vcs {
         root(NzbPowershell.vcsRoots.NzbPowershell_NZBPowershell)
-
         checkoutMode = CheckoutMode.ON_SERVER
     }
 
@@ -55,8 +54,6 @@ Invoke-Pester -OutputFormat NUnitXml -OutputFile Tests.xml"""
     }
 
     triggers {
-        vcs {
-        }
     }
 
     features {
