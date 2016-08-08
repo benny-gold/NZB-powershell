@@ -35,7 +35,7 @@ Fill out the information in secretstemplate.txt and run:
 
     .\bootstrap.ps1
 
-Usage
+Functions
 =====
 
 **CouchPotato**
@@ -71,6 +71,7 @@ Usage
 3. Get-SabNZBdHistory
 
 **Helper Functions**
+
 1. Test-SnatchStatus
 2. Invoke-URLEncoding
 3. Set-Categories

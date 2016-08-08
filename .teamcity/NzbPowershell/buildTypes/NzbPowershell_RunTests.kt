@@ -38,7 +38,7 @@ Classes.ps1"""
             platform = PowerShellStep.Platform.x64
             scriptMode = script {
                 content = """Copy-Item "C:\Git\Repos\NZB-powershell\secrets.ps1" %system.teamcity.build.checkoutDir%
-Copy-Item "C:\Git\Repos\NZB-powershell\secrets.ps1" %system.teamcity.build.checkoutDir%\powershell-notifications"""
+Copy-Item "C:\Git\Repos\NZB-powershell\secrets.ps1" %system.teamcity.build.checkoutDir%\powershell-notifications\"""
             }
             noProfile = true
         }
