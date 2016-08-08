@@ -17,7 +17,6 @@ object NzbPowershell_RunTests : BuildType({
 
     artifactRules = """CouchPotato => CouchPotato
 Helpers => Helpers
-Notifications => Notifications
 Providers => Providers
 SabNZBd+ => SabNZBd+
 Sonarr => Sonarr
@@ -38,7 +37,8 @@ Classes.ps1"""
             name = "Setup Secrets"
             platform = PowerShellStep.Platform.x64
             scriptMode = script {
-                content = """Copy-Item "C:\Git\Repos\NZB-powershell\secrets.ps1" %system.teamcity.build.checkoutDir%"""
+                content = """Copy-Item "C:\Git\Repos\NZB-powershell\secrets.ps1" %system.teamcity.build.checkoutDir%
+Copy-Item "C:\Git\Repos\NZB-powershell\secrets.ps1" %system.teamcity.build.checkoutDir%\powershell-notifications"""
             }
             noProfile = true
         }
