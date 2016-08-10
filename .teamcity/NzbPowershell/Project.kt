@@ -7,7 +7,6 @@ import jetbrains.buildServer.configs.kotlin.v10.*
 import jetbrains.buildServer.configs.kotlin.v10.Project
 import jetbrains.buildServer.configs.kotlin.v10.ProjectFeature
 import jetbrains.buildServer.configs.kotlin.v10.ProjectFeature.*
-import jetbrains.buildServer.configs.kotlin.v10.projectFeatures.VersionedSettings
 import jetbrains.buildServer.configs.kotlin.v10.projectFeatures.VersionedSettings.*
 import jetbrains.buildServer.configs.kotlin.v10.projectFeatures.versionedSettings
 
