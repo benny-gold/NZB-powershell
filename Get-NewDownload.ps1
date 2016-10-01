@@ -184,7 +184,7 @@ Function Global:Get-NewDownload
 
                         Write-Verbose "-SabNZBdplus $sabUrl -APIKey $sabKey -sabCategory $sabCategory -NZBURL $($SelectedDownload.link)"
                         $downloadAdd = Send-Download -SabNZBdplus $sabUrl -APIKey $sabKey -sabCategory $sabCategory -NZBURL $($SelectedDownload.link) 
-                        Send-GNDNotification -title "New result for *$searchString* Snatched" -Body "$searchString has been snatched`n*Title:* $($SelectedDownload.title)`n*Published:* $($SelectedDownload.pubDate)`n*Size:* $($SelectedDownload.friendlySize)mb"  
+                        Send-GNDNotification -title "New result for *$searchString* Snatched" -Body "*Title:* $($SelectedDownload.title)`n*Published:* $($SelectedDownload.pubDate)`n*Size:* $($SelectedDownload.friendlySize)mb"  
                         }
                     catch
                         {
