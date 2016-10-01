@@ -54,9 +54,27 @@ Function Global:Get-NewDownload
             [Parameter(ParameterSetName="ResultsOnly")]
             [Parameter(Mandatory=$false)]
             [switch]
-            $ResultsOnly
+            $ResultsOnly,
+            
+            # Choose notification type
+            [ValidateSet("Slack","Pushalot")]
+            [string]
+            $NotificationType="Slack"
 
         )
+        
+    # create notification function 
+    function Send-GNDNotification ($title, $body) {
+        switch ($NotificationType) {
+            Slack {
+            Send-SlackMessage -Message "$title`n`n$body" -Channel $slackChannel -WebHook $env:SlackWebHookUri
+            }
+            Pushalot {
+            New-PushalotNotification -AuthorizationToken $PushAuthToken -Title $title -body $body
+            }
+        }        
+    }
+       
     # Load Resources
 
     $NZBResults = Search-Newznab -NewzNab $geekURL -APIKey $geekKey -searchString $searchString
@@ -89,7 +107,7 @@ Function Global:Get-NewDownload
         switch($PSCmdlet.ParameterSetName)
             {
             "LatestSet" {
-                $SelectedDownloads = $NZBResults[0..3]
+                $SelectedDownloads = $NZBResults[0..4]
                 }
             "LatestOne" {
                 $SelectedDownloads = $NZBResults[0]
@@ -166,30 +184,29 @@ Function Global:Get-NewDownload
 
                         Write-Verbose "-SabNZBdplus $sabUrl -APIKey $sabKey -sabCategory $sabCategory -NZBURL $($SelectedDownload.link)"
                         $downloadAdd = Send-Download -SabNZBdplus $sabUrl -APIKey $sabKey -sabCategory $sabCategory -NZBURL $($SelectedDownload.link) 
-                        New-PushalotNotification -AuthorizationToken $PushAuthToken -Title "New result for $searchString Snatched" -Body "$searchString has been snatched`n$($SelectedDownload.title)`n$($SelectedDownload.pubDate)`n$($SelectedDownload.friendlySize)"  
+                        Send-GNDNotification -title "New result for *$searchString* Snatched" -Body "$searchString has been snatched`n*Title:* $($SelectedDownload.title)`n*Published:* $($SelectedDownload.pubDate)`n*Size:* $($SelectedDownload.friendlySize)mb"  
                         }
                     catch
                         {
-                        New-PushalotNotification -AuthorizationToken $PushAuthToken -Title "New result for $searchString failed to download!" -Body "$searchString has been found but the download failed. `n$($SelectedDownload.title)`n$($SelectedDownload.link)`n$($_.Exception)" -IsImportant $True
+                         Send-GNDNotification -Title "New result for $searchString failed to download!" -Body "$searchString has been found but the download failed. `n*Title:* $($SelectedDownload.title)`n*Link:*$($SelectedDownload.link)`n*Error:*$($_.Exception)"
                         }
                     }
                 else
                     {
                     Write-Verbose "Item already Snatched"
-                    Write-Output "Download already snatched: `n$($SelectedDownload | ConvertTo-Json)`n"
+                    Write-Output "Download already snatched: $($SelectedDownload.title)`n"
 
                     }
                 }
                 else
                 {
                 Write-Verbose "Got to cancellation"
-                Write-warning "Download cancelled due to being too large:- `n$($SelectedDownload.FriendlySize) | $maxSizeInBytes | $intNum | $($SelectedDownload | ConvertTo-Json)`n"
                 $largePath = "$documentDBLocation\large\$($SelectedDownload.SearchString)_$($SelectedDownload.guid).json"
                 if(!(Test-Path $largePath))
                     {
                     $SelectedDownload | ConvertTo-Json | Out-File -FilePath $largePath
                     }
-                return "Download cancelled due to being too large"
+                return "Download cancelled due to being too large, It was $($SelectedDownload.FriendlySize)mb and the max is $maxSizeInBytes b"
                 }
         }
     
