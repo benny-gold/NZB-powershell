@@ -194,7 +194,7 @@ Function Global:Get-NewDownload
                 else
                     {
                     Write-Verbose "Item already Snatched"
-                    Write-Output "Download already snatched: $($SelectedDownload.title)`n"
+                    Write-Output "Download already snatched: $($SelectedDownload.title)"
 
                     }
                 }
