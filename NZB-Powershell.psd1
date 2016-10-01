@@ -12,7 +12,7 @@
 RootModule = "$psscriptroot\NZB-Powershell.psm1"
 
 # Version number of this module.
-ModuleVersion = '1.0.0.91'
+ModuleVersion = '1.0.1.106'
 
 # ID used to uniquely identify this module
 GUID = 'fef43043-7d3b-4ad5-9a7c-6478aba9a102'
@@ -63,7 +63,7 @@ ScriptsToProcess = @("$PSScriptRoot\secrets.ps1","$PSScriptRoot\Classes.ps1")
 # FormatsToProcess = @()
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
-# NestedModules = @()
+NestedModules = @("$psscriptroot\powershell-notifications\powershell-notifications.psd1")
 
 # Functions to export from this module
 FunctionsToExport = '*'
@@ -72,7 +72,7 @@ FunctionsToExport = '*'
 CmdletsToExport = '*'
 
 # Variables to export from this module
-VariablesToExport = 'documentDBLocation,PushAuthToken,geekURL,geekKey,sabUrl,sabKey,SonarrURL,SonarrKey,rootFolderPath,CouchURL,couchKey,CouchAPIKey,mailgunKey,mailDomain,mailRecipient1,mailRecipient2,mailRecipients,mailRecipientsForTest,TVDBIDKey'
+VariablesToExport = 'documentDBLocation,PushAuthToken,geekURL,geekKey,sabUrl,sabKey,SonarrURL,SonarrKey,rootFolderPath,CouchURL,couchKey,CouchAPIKey,mailgunKey,mailDomain,mailRecipient1,mailRecipient2,mailRecipients,mailRecipientsForTest,TVDBIDKey,$slackChannel'
 
 # Aliases to export from this module
 AliasesToExport = '*'
