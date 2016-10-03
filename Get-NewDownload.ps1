@@ -179,12 +179,12 @@ Function Global:Get-NewDownload
                         {
                         # Create new snatch status Item
                         $SelectedDownload | Add-Member -MemberType NoteProperty -Name snatchDate -Value ((Get-Date).ToString("dd/MM/yyyy HH:mm:ss"))
-                        $SelectedDownload | ConvertTo-Json | Out-File -FilePath "$documentDBLocation\$($SelectedDownload.guid).json"
-
 
                         Write-Verbose "-SabNZBdplus $sabUrl -APIKey $sabKey -sabCategory $sabCategory -NZBURL $($SelectedDownload.link)"
                         $downloadAdd = Send-Download -SabNZBdplus $sabUrl -APIKey $sabKey -sabCategory $sabCategory -NZBURL $($SelectedDownload.link) 
-                        Send-GNDNotification -title "New result for *$searchString* Snatched" -Body "*Title:* $($SelectedDownload.title)`n*Published:* $($SelectedDownload.pubDate)`n*Size:* $($SelectedDownload.friendlySize)mb"  
+                        Send-GNDNotification -title "New result for *$searchString* Snatched" -Body "*Title:* $($SelectedDownload.title)`n*Published:* $($SelectedDownload.pubDate)`n*Size:* $($SelectedDownload.friendlySize)mb"
+                        
+                        $SelectedDownload | ConvertTo-Json | Out-File -FilePath "$documentDBLocation\$($SelectedDownload.guid).json"
                         }
                     catch
                         {
