@@ -57,7 +57,7 @@ Function Global:Get-NewDownload
             $ResultsOnly,
             
             # Choose notification type
-            [ValidateSet("Slack","Pushalot")]
+            [ValidateSet("Slack","Pushalot","None")]
             [string]
             $NotificationType="Slack"
 
@@ -72,6 +72,10 @@ Function Global:Get-NewDownload
             Pushalot {
             New-PushalotNotification -AuthorizationToken $PushAuthToken -Title $title -body $body
             }
+            None {
+            Write-Host  "$title `n`n$body"
+            }
+            
         }        
     }
        
