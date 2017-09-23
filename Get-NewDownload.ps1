@@ -111,7 +111,7 @@ Function Global:Get-NewDownload
         switch($PSCmdlet.ParameterSetName)
             {
             "LatestSet" {
-                $SelectedDownloads = $NZBResults[0..4]
+                $SelectedDownloads = $NZBResults[0..9]
                 }
             "LatestOne" {
                 $SelectedDownloads = $NZBResults[0]
