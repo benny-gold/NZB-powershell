@@ -18,7 +18,7 @@ pipeline {
     }
     stage('Run Tests') {
       steps {
-        bat '"C:\\Windows\\SysNative\\WindowsPowerShell\\v1.0\\Powershell.exe" -ExecutionPolicy ByPass -noprofile -command "[Environment]::Is64BitProcess;Invoke-Pester -OutputFormat NUnitXml -OutputFile .\\reports\\${env.BUILD_NUMBER}_Tests.xml"'
+        bat '"C:\\Windows\\SysNative\\WindowsPowerShell\\v1.0\\Powershell.exe" -ExecutionPolicy ByPass -noprofile -command "[Environment]::Is64BitProcess;md reports;Invoke-Pester -OutputFormat NUnitXml -OutputFile .\\reports\\`${env.BUILD_NUMBER}`_Tests.xml"'
         junit allowEmptyResults: true, testResults: 'reports\\**Tests.xml'
     }
     }
