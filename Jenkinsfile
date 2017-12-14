@@ -19,7 +19,7 @@ pipeline {
     stage('Run Tests') {
       steps {
         bat '"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\Powershell.exe" -ExecutionPolicy ByPass -noprofile -command "[Environment]::Is64BitProcess;Invoke-Pester -OutputFormat NUnitXml -OutputFile Tests.xml"'
-        junit allowEmptyResults: true, testResults: '*Tests.xml'
+        junit allowEmptyResults: true, testResults: '**Tests.xml'
     }
     }
 
