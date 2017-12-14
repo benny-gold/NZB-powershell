@@ -11,6 +11,8 @@ pipeline {
           stage('Get Environment Info') {
       steps {
         powershell '$PSVersionTable'
+        powershell 'Get-ChildItem'
+        powershell '$MyInvocation.MyCommand.Path'
       }
     }
           stage('Get Secrets') {
