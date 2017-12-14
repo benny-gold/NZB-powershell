@@ -9,6 +9,7 @@ pipeline {
         powershell 'Get-ChildItem -recurse'
         powershell '$MyInvocation.MyCommand.Path'
         powershell '[Environment]::Is64BitProcess'
+        powershell 'Invoke-Command -ComputerName . -ScriptBlock { [Environment]::Is64BitProcess }'
       }
     }
           stage('Get Secrets') {
@@ -18,7 +19,7 @@ pipeline {
     }
     stage('Run Tests') {
       steps {
-        bat '"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\Powershell.exe" -ExecutionPolicy ByPass -noprofile -command "[Environment]::Is64BitProcess;Invoke-Pester -OutputFormat NUnitXml -OutputFile Tests.xml"'
+        bat '"C:\\Windows\\SysNative\\WindowsPowerShell\\v1.0\\Powershell.exe" -ExecutionPolicy ByPass -noprofile -command "[Environment]::Is64BitProcess;Invoke-Pester -OutputFormat NUnitXml -OutputFile Tests.xml"'
         junit allowEmptyResults: true, testResults: '**Tests.xml'
     }
     }
