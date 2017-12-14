@@ -35,7 +35,7 @@ pipeline {
         }
         success {
             script {     
-                def status 'Jobs a goodun'      
+                def status = 'Jobs a goodun'      
                 def color = '#6600ff'
                 def msg = "Build Successful: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${env.BUILD_URL}"
                 slackSend(color: color, message: msg)   
@@ -43,7 +43,7 @@ pipeline {
         }
         failure {
             script {
-                def status 'Jobs a baddie'      
+                def status = 'Jobs a baddie'      
                 def color = '#cc0066'
                 def msg = "Build Failed: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${env.BUILD_URL}"
                 slackSend(color: color, message: msg)
