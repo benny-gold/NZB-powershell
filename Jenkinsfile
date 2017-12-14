@@ -11,7 +11,7 @@ pipeline {
           stage('Get Environment Info') {
       steps {
         powershell '$PSVersionTable'
-        powershell 'Get-ChildItem'
+        powershell 'GCI -recurse'
         powershell '$MyInvocation.MyCommand.Path'
       }
     }
