@@ -6,8 +6,9 @@ pipeline {
           stage('Get Environment Info') {
       steps {
         powershell '$PSVersionTable'
-        powershell 'GCI -recurse'
+        powershell 'Get-ChildItem -recurse'
         powershell '$MyInvocation.MyCommand.Path'
+        powershell '[Environment]::Is64BitProcess'
       }
     }
           stage('Get Secrets') {
@@ -17,7 +18,7 @@ pipeline {
     }
     stage('Run Tests') {
       steps {
-        bat '"C:\\Windows\\SysNative\\WindowsPowerShell\\v1.0\\Powershell.exe" -ExecutionPolicy ByPass -noprofile -command "Invoke-Pester -OutputFormat NUnitXml -OutputFile Tests.xml"'
+        bat '"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\Powershell.exe" -ExecutionPolicy ByPass -noprofile -command "Invoke-Pester -OutputFormat NUnitXml -OutputFile Tests.xml"'
     }
     }
 
