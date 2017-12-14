@@ -18,7 +18,8 @@ pipeline {
     }
     stage('Run Tests') {
       steps {
-        bat '"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\Powershell.exe" -ExecutionPolicy ByPass -noprofile -command "Invoke-Pester -OutputFormat NUnitXml -OutputFile Tests.xml"'
+        bat '"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\Powershell.exe" -ExecutionPolicy ByPass -noprofile -command "[Environment]::Is64BitProcess;Invoke-Pester -OutputFormat NUnitXml -OutputFile Tests.xml"'
+        junit allowEmptyResults: true, testResults: '*Tests.xml'
     }
     }
 
@@ -33,7 +34,8 @@ pipeline {
             echo 'Build Finished!'
         }
         success {
-            script {           
+            script {     
+                def status 'Jobs a goodun'      
                 def color = '#6600ff'
                 def msg = "Build Successful: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${env.BUILD_URL}"
                 slackSend(color: color, message: msg)   
@@ -41,6 +43,7 @@ pipeline {
         }
         failure {
             script {
+                def status 'Jobs a baddie'      
                 def color = '#cc0066'
                 def msg = "Build Failed: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${env.BUILD_URL}"
                 slackSend(color: color, message: msg)
