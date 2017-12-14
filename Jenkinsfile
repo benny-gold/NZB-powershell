@@ -17,8 +17,8 @@ pipeline {
     }
     stage('Run Tests') {
       steps {
-        powershell 'Invoke-Pester -OutputFormat NUnitXml -OutputFile Tests.xml'
-      }
+        bat '"C:\\Windows\\SysNative\\WindowsPowerShell\\v1.0\\Powershell.exe" -ExecutionPolicy ByPass -noprofile -command "Invoke-Pester -OutputFormat NUnitXml -OutputFile Tests.xml"'
+    }
     }
 
     stage('Update Module Manifest') {
