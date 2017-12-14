@@ -3,6 +3,11 @@ pipeline {
     label 'windows'
   }
   stages {
+        stage('Clean Workspace') {
+            steps{
+                step([$class: 'WsCleanup', cleanWhenSuccess: false, notFailBuild: true])
+            }
+        }
           stage('Get Environment Info') {
       steps {
         powershell '$PSVersionTable'
@@ -27,4 +32,23 @@ pipeline {
       }
     }
   }
+      post {
+        always {
+            echo 'Build Finished!'
+        }
+        success {
+            script {           
+                def color = '#6600ff'
+                def msg = "Build Successful: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${env.BUILD_URL}"
+                slackSend(color: color, message: msg)   
+            }
+        }
+        failure {
+            script {
+                def color = '#cc0066'
+                def msg = "Build Failed: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${env.BUILD_URL}"
+                slackSend(color: color, message: msg)
+            }
+        }
+    }
 }
