@@ -1,4 +1,4 @@
-class CleanObject
+﻿class CleanObject
     {
     [int]$index
     [string]$SearchString

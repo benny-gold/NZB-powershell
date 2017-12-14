@@ -1,4 +1,4 @@
-
+﻿
 Function Set-Categories
     {
 	# Figure out categories. run this function and enter your own SabNZBd+ categories as found here: http://localhost:8080/config/categories/
