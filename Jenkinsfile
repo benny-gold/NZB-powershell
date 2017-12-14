@@ -3,11 +3,6 @@ pipeline {
     label 'windows'
   }
   stages {
-        stage('Clean Workspace') {
-            steps{
-                step([$class: 'WsCleanup', cleanWhenSuccess: false, notFailBuild: true])
-            }
-        }
           stage('Get Environment Info') {
       steps {
         powershell '$PSVersionTable'
