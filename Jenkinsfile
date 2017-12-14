@@ -1,10 +1,12 @@
 pipeline {
-    agent { label 'windows' } 
-    stages {
-        stage('Run Tests') {
-            steps {
-                echo 'blahgit '
-            }
-        }
+  agent {
+    label 'windows'
+  }
+  stages {
+    stage('Run Tests') {
+      steps {
+        powershell 'gci'
+      }
     }
+  }
 }
