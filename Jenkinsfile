@@ -20,7 +20,7 @@ pipeline {
     stage('Run Tests') {
       steps {
         bat '"C:\\Windows\\SysNative\\WindowsPowerShell\\v1.0\\Powershell.exe" -ExecutionPolicy ByPass -noprofile -command "[Environment]::Is64BitProcess;md reports;Invoke-Pester ./tests/* -OutputFormat NUnitXml -OutputFile .\\reports\\$($env:BUILD_NUMBER)_Tests.xml"'
-        junit(allowEmptyResults: true, testResults: 'reports\\**Tests.xml', healthScaleFactor: 1)
+        junit(allowEmptyResults: true, testResults: '**/reports/**Tests.xml', healthScaleFactor: 1)
       }
     }
     stage('Update Module Manifest') {
