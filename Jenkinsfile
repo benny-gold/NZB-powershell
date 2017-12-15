@@ -30,9 +30,12 @@ pipeline {
     }
     stage('Clean Workspace') {
       steps {
-        cleanWs(notFailBuild: true, skipWhenFailed: true, cleanWhenNotBuilt: true, cleanWhenAborted: true, cleanWhenUnstable: true)
+        cleanWs(notFailBuild: true)
       }
     }
+  }
+  environment {
+    moduleGuid = '9b63ed1f-0459-4d44-9df6-d07c69be0895'
   }
   post {
     always {
