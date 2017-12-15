@@ -28,9 +28,9 @@ pipeline {
         powershell 'gci'
       }
     }
-    stage('Clean Workspace') {
+    stage('Clean Up') {
       steps {
-        cleanWs(notFailBuild: true, skipWhenFailed: true, cleanWhenSuccess: false, cleanWhenNotBuilt: false, cleanWhenAborted: true, cleanWhenUnstable: false)
+        archiveArtifacts(artifacts: '**', allowEmptyArchive: true, onlyIfSuccessful: true)
       }
     }
   }
