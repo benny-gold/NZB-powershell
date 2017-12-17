@@ -1,0 +1,29 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "_runner": "terminal",
+
+    "tasks": [{
+            "taskName": "Open test suite",
+            "type": "shell",
+            "group": {
+                "kind": "none",
+                "isDefault": true
+            },
+            "command": "code ${workspaceFolder}\\tests\\${fileBasenameNoExtension}.Tests.ps1",
+            "problemMatcher": []
+        },
+        {
+            "taskName": "Run Tests",
+            "type": "shell",
+            "group": {
+                "kind": "test",
+                "isTestCommand": true
+            },
+
+            "command": "Invoke-Pester -Script ${workspaceFolder}\\tests\\${fileBasenameNoExtension}.Tests.ps1",
+            "problemMatcher": []
+        }
+    ]
+}
