@@ -30,3 +30,32 @@ class Movie {
     [double]$imdbRating
     [int]$imdbID
 }
+
+
+
+
+class NzbSettingsObject {
+    [string]$PushAuthToken
+    [string]$geekURL
+    [string]$geekKey
+    [string]$sabUrl
+    [string]$sabKey
+    [string]$SonarrURL
+    [string]$SonarrKey
+    [string]$rootFolderPath
+    [string]$CouchURL
+    [string]$couchKey
+    [string]$CouchAPIKey
+    [string]$omdbApiKey
+    [string]$mailgunKey
+    [string]$mailDomain
+    [string]$mailRecipient1
+    [string]$mailRecipient2
+    [string]$mailRecipients
+    [string]$mailRecipientsForTest
+    [string]$TVDBIDKey
+    [string]$documentDBLocation
+    [string]$backupFolder
+    [string]$DBLocation
+    [string]$slackChannel
+}
