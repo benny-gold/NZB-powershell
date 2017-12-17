@@ -45,3 +45,5 @@ tests.ps1
 adhocruns.ps1
 CouchPotato/settings.json
 .jenkins
+test.html
+tests/here.xml
