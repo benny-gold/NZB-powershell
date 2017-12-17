@@ -126,31 +126,31 @@ function Search-Newznab {
 
     Write-Verbose "Searching $NewzNab for `"$searchString`""
     $ParamSet = @{
-        book    = "&t=book"
-        movie   = "&t=movie"
-        music   = "&t=music"
-        tv      = "&t=tvsearch"
+        book = "&t=book"
+        movie = "&t=movie"
+        music = "&t=music"
+        tv = "&t=tvsearch"
         general = "&t=search"
-        guid    = "&t=details"
+        guid = "&t=details"
     }
     
 
     $searchURL += $ParamSet.($psCmdlet.ParameterSetName)
 
     $SearchOptions = @{
-        TVDBId   = 'tvdbid'
+        TVDBId = 'tvdbid'
         TVRageId = 'rid'
-        Season   = 'season'
-        Episode  = 'ep'
-        Author   = 'Author'
-        imdbid   = 'imdbid'
-        genre    = 'genre'
-        artist   = 'artist'
-        album    = 'album'
-        label    = 'label'
-        year     = 'year'
+        Season = 'season'
+        Episode = 'ep'
+        Author = 'Author'
+        imdbid = 'imdbid'
+        genre = 'genre'
+        artist = 'artist'
+        album = 'album'
+        label = 'label'
+        year = 'year'
         language = 'language'
-        id       = 'id'
+        id = 'id'
     }
 
     foreach ($key in $PSBoundParameters.keys) {

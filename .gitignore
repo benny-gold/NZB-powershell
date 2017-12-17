@@ -47,3 +47,4 @@ CouchPotato/settings.json
 .jenkins
 test.html
 tests/here.xml
+.vscode/settings.json

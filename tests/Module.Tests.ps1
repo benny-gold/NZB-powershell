@@ -4,7 +4,7 @@ Import-Module "$here\..\NZB-Powershell.psm1" -Force
 Describe "NZB-Powershell Module" {
 
     It "Imports Successfully" {
-        {Import-Module "$here\..\NZB-Powershell.psm1"} | Should Not Throw
+        { Import-Module "$here\..\NZB-Powershell.psm1" } | Should Not Throw
         (Get-Command -Module NZB-Powershell).Count | should not be 0
     }
 

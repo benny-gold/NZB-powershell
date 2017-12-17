@@ -21,15 +21,15 @@
     $PushAPI = "https://pushalot.com/api/sendmessage"
     $PushBody = @{
         "AuthorizationToken" = $AuthorizationToken;
-        "Title"              = $Title;
-        "Body"               = "$body";
-        "LinkTitle"          = $LinkTitle;
-        "Link"               = $Link;
-        "IsImportant"        = $IsImportant;
-        "IsSilent"           = $IsSilent;
-        "Image"              = $Image;
-        "Source"             = $Source
-        "TimeToLive"         = $TimeToLive
+        "Title" = $Title;
+        "Body" = "$body";
+        "LinkTitle" = $LinkTitle;
+        "Link" = $Link;
+        "IsImportant" = $IsImportant;
+        "IsSilent" = $IsSilent;
+        "Image" = $Image;
+        "Source" = $Source
+        "TimeToLive" = $TimeToLive
     } 
 
     $PushJSON = ConvertTo-Json $PushBody

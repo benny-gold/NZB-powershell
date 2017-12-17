@@ -9,38 +9,38 @@
         'PSAlignAssignmentStatement'
     )
 
-    Rules        = @{
-        PSPlaceOpenBrace           = @{
-            Enable             = $true
-            OnSameLine         = $true
-            NewLineAfter       = $true
+    Rules = @{
+        PSPlaceOpenBrace = @{
+            Enable = $true
+            OnSameLine = $true
+            NewLineAfter = $true
             IgnoreOneLineBlock = $true
         }
 
-        PSPlaceCloseBrace          = @{
-            Enable             = $true
-            NewLineAfter       = $true
+        PSPlaceCloseBrace = @{
+            Enable = $true
+            NewLineAfter = $true
             IgnoreOneLineBlock = $true
-            NoEmptyLineBefore  = $false
+            NoEmptyLineBefore = $false
         }
 
         PSUseConsistentIndentation = @{
-            Enable          = $false
-            Kind            = 'space'
+            Enable = $false
+            Kind = 'space'
             IndentationSize = 4
         }
 
-        PSUseConsistentWhitespace  = @{
-            Enable         = $true
+        PSUseConsistentWhitespace = @{
+            Enable = $true
             CheckOpenBrace = $true
             CheckOpenParen = $true
-            CheckOperator  = $true
+            CheckOperator = $true
             CheckSeparator = $true
         }
 
         PSAlignAssignmentStatement = @{
-            Enable         = $false #  Until https://github.com/PowerShell/PSScriptAnalyzer/issues/769 is fixed# PSScriptAnalyzerSettings.psd1            
-            CheckHashtable = $true
+            Enable = $false #  Until https://github.com/PowerShell/PSScriptAnalyzer/issues/769 is fixed# PSScriptAnalyzerSettings.psd1            
+            CheckHashtable = $false
         }
     }
 }
