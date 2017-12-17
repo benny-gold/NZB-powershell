@@ -4,7 +4,7 @@ Import-Module "$here\..\NZB-Powershell.psm1" -Force
 Describe "NZB-Powershell Module" {
 
     It "Imports Successfully" {
-        { Import-Module "$here\..\NZB-Powershell.psm1" } | Should Not Throw
+        $test = { Import-Module "$here\..\NZB-Powershell.psd1" } | Should Not Throw
         (Get-Command -Module NZB-Powershell).Count | should not be 0
     }
 
@@ -38,7 +38,7 @@ Describe "NZB-Powershell Module" {
     }
 
     Context 'ScriptAnalyzer Rules' {
-        $analysis = Invoke-ScriptAnalyzer -Path  "$here\..\" -Setting $here\AnalyserRules.psd1 -Verbose -Recurse
+        $analysis = Invoke-ScriptAnalyzer -Path  "$here\..\" -Setting $here\AnalyserRules.psd1 -Recurse
         $scriptAnalyzerRules = Get-ScriptAnalyzerRule
         forEach ($rule in $scriptAnalyzerRules) {
             It "Should pass $rule" {
