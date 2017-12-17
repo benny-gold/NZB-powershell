@@ -1,5 +1,4 @@
-﻿class CleanObject
-    {
+﻿class CleanObject {
     [int]$index
     [string]$SearchString
     [string]$title
@@ -10,16 +9,14 @@
     [long]$NonFriendlySize
     [string]$FriendlySize
     [string]$guid
-    }
+}
     
-class ZeroSearch
-    {
+class ZeroSearch {
     [string]$searchString
     [datetime]$searchDate
-    }
+}
     
-class Movie
-    {
+class Movie {
     [string]$Title
     [int]$Year
     [string]$Rated
@@ -32,4 +29,4 @@ class Movie
     [string]$Poster
     [double]$imdbRating
     [int]$imdbID
-    }
+}

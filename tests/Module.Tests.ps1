@@ -50,7 +50,7 @@ Describe "NZB-Powershell Module" {
         }
     }
 
-    Context "All Functions have Tests"{
+    Context "All Functions have Tests" {
         $functions = Get-ChildItem  -Path "$here\..\*-*.ps1" -Recurse -Exclude "**\powershell-notifications\*"
         foreach ($Function in $functions) {
             It "$($function.BaseName) has a Test suite in the correct location." {
