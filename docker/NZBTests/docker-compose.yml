@@ -3,7 +3,7 @@ services:
   sab:
     image: "sabnzbd/sabnzbd"
     ports:
-         - 8080:8080
+         - 8880:8080
     volumes:
          - ./sab:/datadir
     cap_add:
@@ -12,7 +12,7 @@ services:
   sonarr:
     image: "linuxserver/sonarr"
     ports:
-         - 8989:8989
+         - 8881:8989
     volumes:
          - ./sonarr:/config
     cap_add:
@@ -21,6 +21,6 @@ services:
   couchpotato:
     image: "linuxserver/couchpotato"
     ports:
-         - 9090:9090
+         - 8882:5050
     volumes:
          - ./couch:/config
