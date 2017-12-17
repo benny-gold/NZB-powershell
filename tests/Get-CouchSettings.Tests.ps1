@@ -4,6 +4,6 @@ Import-Module "$here\..\NZB-Powershell.psd1" -Force
 
 Describe "Get-CouchSettings" {
     It "Should get couch settings" {
-      Get-CouchSettings -couchUrl $couchUrl -couchApiKey $couchApiKey | Should not be $null
+        Get-CouchSettings -couchUrl $couchUrl -couchApiKey $couchApiKey | Should not be $null
     }
 }

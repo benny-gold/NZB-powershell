@@ -1,20 +1,20 @@
 ﻿function Get-CouchSettings {
     [OutputType([Object])]
-        Param
-        (
-        [Parameter(Mandatory=$True,Position=0)]
+    Param
+    (
+        [Parameter(Mandatory = $True, Position = 0)]
         [string]
         $couchUrl,
 
-        [Parameter(Mandatory=$True,Position=1)]
+        [Parameter(Mandatory = $True, Position = 1)]
         [string]
         $couchApiKey
-        )
+    )
         
         
-        $settingsEndpoint = "settings"
+    $settingsEndpoint = "settings"
 
 
-        $settings = Invoke-RestMethod "$CouchURL/api/$couchApiKey/$settingsEndpoint"
-        return $settings 
+    $settings = Invoke-RestMethod "$CouchURL/api/$couchApiKey/$settingsEndpoint"
+    return $settings 
 }

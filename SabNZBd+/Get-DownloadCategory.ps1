@@ -1,24 +1,21 @@
-﻿function Get-DownloadCategory
-    {
+﻿function Get-DownloadCategory {
     Param
 
-        (
-        [Parameter(Mandatory=$True)]
+    (
+        [Parameter(Mandatory = $True)]
         [string]
         $Category
-        )
+    )
 
     $categories = Get-Content "$PSScriptRoot\..\Helpers\SabCategories.json" | ConvertFrom-Json
-    if($categories.($Category))
-        {
+    if ($categories.($Category)) {
         Write-Verbose "Setting Category to $($categories.($Category))"
         $sabCategory += "{0}" -f $categories.($Category)
-        }
-    else
-        {
+    }
+    else {
         $sabCategory = "jizzles"
-        }
+    }
     
     return $sabCategory
 
-    }
+}

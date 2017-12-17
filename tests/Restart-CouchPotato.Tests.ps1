@@ -5,8 +5,8 @@ Import-Module "$here\..\NZB-Powershell.psd1" -Force
 
 Describe "Restart-CouchPotato" {
     It "Should Restart Couch" {
-       # This is too destructive :/
-       # Restart-CouchPotato -couchURL $CouchURL -couchApiKey $couchKey | Should match "app.restart"
-       "app.restart" | Should match "app.restart"
+        # This is too destructive :/
+        # Restart-CouchPotato -couchURL $CouchURL -couchApiKey $couchKey | Should match "app.restart"
+        "app.restart" | Should match "app.restart"
     }
 }
