@@ -38,7 +38,7 @@ Describe "NZB-Powershell Module" {
     }
 
     Context 'ScriptAnalyzer Rules' {
-        $analysis = Invoke-ScriptAnalyzer -Path  "$here\..\" -Setting $here/AnalyserRules.psd1 -Verbose
+        $analysis = Invoke-ScriptAnalyzer -Path  "$here\..\" -Setting $here\AnalyserRules.psd1 -Verbose
         $scriptAnalyzerRules = Get-ScriptAnalyzerRule
         forEach ($rule in $scriptAnalyzerRules) {
             It "Should pass $rule" {
