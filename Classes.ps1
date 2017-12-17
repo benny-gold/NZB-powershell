@@ -36,10 +36,10 @@ class Movie {
 
 class NzbSettingsObject {
     [string]$PushAuthToken
-    [string]$geekURL
-    [string]$geekKey
-    [string]$sabUrl
-    [string]$sabKey
+    [string]$GeekURL
+    [string]$GeekKey
+    [string]$SabUrl
+    [string]$SabKey
     [string]$SonarrURL
     [string]$SonarrKey
     [string]$rootFolderPath
@@ -51,11 +51,12 @@ class NzbSettingsObject {
     [string]$mailDomain
     [string]$mailRecipient1
     [string]$mailRecipient2
-    [string]$mailRecipients
-    [string]$mailRecipientsForTest
+    [array]$mailRecipients
+    [array]$mailRecipientsForTest
     [string]$TVDBIDKey
     [string]$documentDBLocation
     [string]$backupFolder
     [string]$DBLocation
     [string]$slackChannel
+    [datetime]$settingsCreatedAt
 }

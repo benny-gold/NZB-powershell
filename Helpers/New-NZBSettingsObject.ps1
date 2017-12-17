@@ -1,7 +1,96 @@
 ﻿function New-NZBSettingsObject {
-    . $PSScriptRoot\classes.ps1
+    [CmdletBinding(DefaultParameterSetName = "none")]
+
+    param(
+        [object]
+        $NzbSettingsObject,
+        
+
+        [string]
+        $OutFile,
+        
+
+        [string]
+        $InFile,
+
+
+
+        [validateset("StdOut", "File")]
+        [string]
+        $OutType = "StdOut"
+
+
+
+
+        string]
+        $PushAuthToken,
+        
+        [string]
+        $GeekURL,
+        
+        [string]
+        $GeekKey,
+        
+        [string]
+        $SabUrl,
+        
+        [string]
+        $SabKey,
+        
+        [string]
+        $SonarrURL,
+        
+        [string]
+        $SonarrKey,
+        
+        [string]
+        $rootFolderPath,
+        
+        [string]
+        $CouchURL,
+        
+        [string]
+        $couchKey,
+        
+        [string]
+        $CouchAPIKey,
+        
+        [string]
+        $omdbApiKey,
+        
+        [string]
+        $mailgunKey,
+        
+        [string]
+        $mailDomain,
+        
+        [string]
+        $mailRecipient1,
+        
+        [string]
+        $mailRecipient2,
+        
+        [string]
+        $TVDBIDKey,
+        
+        [string]
+        $documentDBLocation,
+        
+        [string]
+        $backupFolder,
+        
+        [string]
+        $DBLocation,
+        
+        [string]
+        $slackChannel
+        
+    )
+
+    . $PSScriptRoot\..\classes.ps1
 
     $settingsObject = New-Object -TypeName NzbSettingsObject
+    $settingsObject.settingsCreatedAt = Get-Date
 
 
 
@@ -43,5 +132,20 @@
     
     $settingsObject.slackChannel = $slackChannel
 
-    return $settingsObject
+
+    
+    
+    if ($OutType -like "File") {
+        Write-Verbose "Exporting Settings..."
+        try {
+            $settingsObject | ConvertTo-Json | Out-File $OutFile -Encoding utf8
+            return $true
+        }
+        catch {
+            Throw "Could not write settings to File"
+        }
+    }
+    elseif ($OutType -like "StdOut") {
+        return $settingsObject
+    }
 }

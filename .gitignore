@@ -48,3 +48,4 @@ CouchPotato/settings.json
 test.html
 tests/here.xml
 .vscode/settings.json
+secrets.json
