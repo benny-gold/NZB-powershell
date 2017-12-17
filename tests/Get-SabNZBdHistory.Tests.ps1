@@ -1,6 +1,6 @@
 ﻿$here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path).Replace(".Tests.", ".")
-Import-Module "$here\..\NZB-Powershell" -Force
+Import-Module "$here\..\NZB-Powershell.psd1" -Force
 
 Describe "Get-SabNZBdHistory" {
     $link = "https://api.nzbgeek.info/api?t=get&id=75fc16fb24f31f48d29102994ce6d670&apikey=85490c5bff3d1a707daa276eda7f5311"
