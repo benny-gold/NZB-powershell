@@ -1,16 +1,16 @@
 ﻿function Get-TVDBId {
     [OutputType([Object])]
     Param
-        (
+    (
         # TVDB API Key. Get one from http://thetvdb.com/?tab=apiregister
-        [Parameter(Mandatory=$True,Position=0)]
+        [Parameter(Mandatory = $True, Position = 0)]
         [string]
         $APIKey,
 
-        [Parameter(Mandatory=$True,Position=1)]
+        [Parameter(Mandatory = $True, Position = 1)]
         [string]
         $show
-        )
+    )
     
 
     $xmlMirrors = Invoke-RestMethod -Method Get -uri "http://thetvdb.com/api/$($APIKey)/mirrors.xml"
@@ -25,16 +25,14 @@
     $results = Invoke-RestMethod -Method Get -Uri $apiCall
     
     
-    if($results.Data.Series -is [System.Array])
-        {
+    if ($results.Data.Series -is [System.Array]) {
         Write-Verbose "Is array"
         $parsedResults = $results.Data.Series[0]
-        }
-    else
-        {
+    }
+    else {
         Write-Verbose "Is not array"
         $parsedResults = $results.Data.Series
-        }
+    }
 
     return $parsedResults
 

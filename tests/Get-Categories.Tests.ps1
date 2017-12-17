@@ -5,6 +5,6 @@ Import-Module "$here\..\NZB-Powershell.psd1" -Force
 
 Describe "Get-Categories" {
     It "Should return Categories." {
-       Get-Categories -NewzNab $geekURL -APIKey $geekKey | Should not be 0
+        Get-Categories -NewzNab $geekURL -APIKey $geekKey | Should not be 0
     }
 }

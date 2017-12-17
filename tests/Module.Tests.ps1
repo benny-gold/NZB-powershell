@@ -30,7 +30,7 @@ Describe "NZB-Powershell Module" {
         }
 
         
-        foreach ($file in $(Get-ChildItem -Recurse -Path "$here\.." -Include "*.ps*1")) {
+        foreach ($file in $(Get-ChildItem -Recurse -Path "$here\.." -Include "*.ps*1" -Exclude "*NZB-Powershell.psd1")) {
             It "$($file.Name) is UTF-8 encoded" {
                 Get-FileEncoding -Path $file.FullName | should be "UTF8"
             }
