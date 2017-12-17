@@ -17,7 +17,7 @@
 
         [validateset("StdOut", "File")]
         [string]
-        $OutType = "StdOut"
+        $OutType = "StdOut",
 
 
 

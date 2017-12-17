@@ -7,8 +7,7 @@ Gci "$PSScriptRoot\SabNZBd+\*.ps1" | ForEach-Object {. $_.FullName}
 . "$PSScriptRoot\Helpers\Test-SnatchStatus.ps1"
 . "$PSScriptRoot\secrets.ps1"
 . "$PSScriptRoot\Get-NewDownload.ps1"
-. "$PSScriptRoot\Helpers\New-NzbSettingsObject.ps1"
-
+. "$PSScriptRoot\Helpers\New-NZBSettingsObject.ps1"
 
 Export-ModuleMember -Function *
 Export-ModuleMember -Variable *
