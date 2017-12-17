@@ -2,12 +2,15 @@
     [OutputType([xml])]
     Param
     (
-    [Parameter(Mandatory=$True,Position=1)]
-    [string]$MovieName
+        [Parameter(Mandatory = $True, Position = 0)]
+        [string]$MovieName,
+    
+    
+        [Parameter(Mandatory = $True, Position = 1)]
+        [string]$OmdbApiKey
     )
 
-    class Movie
-        {
+    class Movie {
         [string]$Title
         [int]$Year
         [string]$Rated
@@ -20,13 +23,13 @@
         [string]$Poster
         [double]$imdbRating
         [int]$imdbID
-        }
+    }
 
-    $movieResults = Invoke-RestMethod "http://www.omdbapi.com/?t=$($MovieName)&type=movie&plot=full"
-    if($movieResults.count -eq 0) {
+    $movieResults = Invoke-RestMethod "http://www.omdbapi.com/?apikey=$OmdbApiKey&t=$($MovieName)&type=movie&plot=full"
+    if ($movieResults.count -eq 0) {
         "No Results Found"
         return
-        }
+    }
     $movieObject = New-Object Movie
     $movieObject.Title = $movieResults.Title
     $movieObject.Year = $movieResults.Year
@@ -39,7 +42,7 @@
     $movieObject.Actors = $movieResults.Actors
     $movieObject.Poster = $movieResults.Poster
     $movieObject.imdbRating = $movieResults.imdbRating
-    $movieObject.imdbID = ($movieResults.imdbID -replace "tt","")
+    $movieObject.imdbID = ($movieResults.imdbID -replace "tt", "")
 
     return $movieObject
 }

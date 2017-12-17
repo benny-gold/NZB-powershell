@@ -19,14 +19,14 @@ pipeline {
     }
     stage('Run Tests') {
       steps {
-        bat '"C:\\Windows\\SysNative\\WindowsPowerShell\\v1.0\\Powershell.exe" -ExecutionPolicy ByPass -noprofile -command "md reports -ea SilentlyContinue;Invoke-Pester ./tests/* -OutputFormat NUnitXml -OutputFile .\\reports\\$($env:BUILD_NUMBER)_Tests.xml"'
-        nunit failIfNoResults: true, testResultsPattern: "**/reports/${env.BUILD_NUMBER}_Tests.xml"
+        bat '"C:\\Windows\\SysNative\\WindowsPowerShell\\v1.0\\Powershell.exe" -ExecutionPolicy ByPass -noprofile -command "Invoke-Pester -OutputFormat NUnitXml -OutputFile .\\$($env:BUILD_NUMBER)_Tests.xml"'
+        nunit failIfNoResults: true, testResultsPattern: "**/${env.BUILD_NUMBER}_Tests.xml"
       }
     }
     stage('Update Module Manifest') {
-        when{
-    branch 'master'
-  }
+      when {
+        branch 'master'
+      }
       steps {
         powershell 'New-ModuleManifest -RootModule "$psscriptroot\\NZB-Powershell.psm1" -ModuleVersion "2.0.0.$(106+$env:BUILD_NUMBER)" -Guid "fef43043-7d3b-4ad5-9a7c-6478aba9a102" -Author "Ben Gould" -Copyright "2017 Ben Gould. All rights reserved." -PowerShellVersion 4.0 -FunctionsToExport * -VariablesToExport * -Path NZB-Powershell.psd1 -CmdletsToExport * -ScriptsToProcess @("$PSScriptRoot\\secrets.ps1", "$PSScriptRoot\\Classes.ps1") -CompanyName "Choffins Ltd."'
       }
