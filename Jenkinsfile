@@ -6,6 +6,8 @@ pipeline {
     label 'docker-qa'
   }
   steps {
+    sh 'env'
+    sh 'ifconfig'
     sh 'cd ./docker/NZBTests && docker-compose up -d'
   }
     }
