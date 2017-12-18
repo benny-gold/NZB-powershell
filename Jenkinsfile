@@ -1,9 +1,18 @@
 pipeline {
-  agent {
+  agent none
+  stages {
+        stage ('Spin up Docker Environment') {
+        agent {
+    label 'docker-qa'
+  }
+  steps {
+    sh 'cd ./docker/NZBTests && docker-compose up -d'
+  }
+    }
+    stage('Get Environment Info') {
+        agent {
     label 'windows'
   }
-  stages {
-    stage('Get Environment Info') {
       steps {
         powershell '$PSVersionTable'
         powershell 'Get-ChildItem -recurse'
@@ -13,17 +22,26 @@ pipeline {
       }
     }
     stage('Get Secrets') {
+        agent {
+    label 'windows'
+  }
       steps {
-        powershell 'Copy-Item C:\\Git\\Repos\\NZB-powershell\\secrets.ps1 -destination .\\secrets.ps1;     Copy-Item -path C:\\Git\\Repos\\NZB-powershell\\secrets.ps1 -destination .\\powershell-notifications\\secrets.ps1'
+        powershell 'Copy-Item C:\\Git\\Repos\\NZB-powershell\\docker\\secrets.ps1 -destination .\\secrets.ps1;     Copy-Item -path C:\\Git\\Repos\\NZB-powershell\\docker\\secrets.ps1 -destination .\\powershell-notifications\\secrets.ps1'
       }
     }
     stage('Run Tests') {
+        agent {
+    label 'windows'
+  }
       steps {
         bat '"C:\\Windows\\SysNative\\WindowsPowerShell\\v1.0\\Powershell.exe" -ExecutionPolicy ByPass -noprofile -command "Invoke-Pester -OutputFormat NUnitXml -OutputFile .\\$($env:BUILD_NUMBER)_Tests.xml"'
         nunit failIfNoResults: true, testResultsPattern: "**/${env.BUILD_NUMBER}_Tests.xml"
       }
     }
     stage('Update Module Manifest') {
+        agent {
+    label 'windows'
+  }
       when {
         branch 'master'
       }
@@ -32,9 +50,20 @@ pipeline {
       }
     }
     stage('Clean Up') {
+        agent {
+    label 'windows'
+  }
       steps {
         archiveArtifacts(artifacts: '**', allowEmptyArchive: true, onlyIfSuccessful: true)
       }
+    }
+    stage ('Tear down Docker') {
+        agent {
+    label 'docker-qa'
+  }
+  steps {
+    sh 'cd ./docker/NZBTests && docker-compose down'
+  }
     }
   }
   environment {

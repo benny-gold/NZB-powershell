@@ -46,5 +46,8 @@ adhocruns.ps1
 CouchPotato/settings.json
 .jenkins
 test.html
-tests/here.xml
+tests/*.xml
 .vscode/settings.json
+secrets.json
+docker/*/logs/*
+docker/*/*.db
