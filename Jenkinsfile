@@ -7,7 +7,7 @@ pipeline {
   }
   steps {
     sh 'env'
-    sh 'ifconfig'
+    sh 'hostname'
     sh 'cd ./docker/NZBTests && docker-compose up -d'
   }
     }
