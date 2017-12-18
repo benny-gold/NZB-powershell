@@ -1,9 +1,38 @@
 ﻿$here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -replace '\.Tests\.', '.'
-. "$here\$sut"
+. "$here\..\Helpers\$sut"
 
 Describe "New-NZBSettingsObject" {
-    It "does something useful" {
-        $true | Should Be $false
+    context "Import a file" {
+        It "Does not Error" {
+
+        }
+        It "Does a thing" { 
+
+        }
+    }
+    Context "Export as File" {
+        It "Does not Error" {
+            
+        }
+        It "Does a thing" { 
+            
+        }
+    }
+    Context "Out as Object" {
+        It "Does not Error" {
+            
+        }
+        It "Does a thing" { 
+            
+        }
+    }
+    Context "Import an Object" {
+        It "Does not Error" {
+            
+        }
+        It "Does a thing" { 
+            
+        }
     }
 }

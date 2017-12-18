@@ -22,7 +22,7 @@
 
 
 
-        string]
+        [string]
         $PushAuthToken,
         
         [string]
