@@ -45,7 +45,6 @@ pipeline {
       echo 'Build Finished!'
       
     }
-    
     success {
       script {
         def status = 'Jobs a goodun'
@@ -53,10 +52,7 @@ pipeline {
         def msg = "Build Successful: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${env.BUILD_URL}"
         slackSend(color: color, message: msg)
       }
-      
-      
     }
-    
     failure {
       script {
         def status = 'Jobs a baddie'
@@ -64,8 +60,6 @@ pipeline {
         def msg = "Build Failed: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${env.BUILD_URL}"
         slackSend(color: color, message: msg)
       }
-      
-      
     }
     
   }
