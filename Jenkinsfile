@@ -8,7 +8,8 @@ pipeline {
   steps {
     sh 'env'
     sh 'hostname'
-    sh 'cd ./docker/NZBTests && sudo docker-compose up -d'
+    sh 'docker --version'
+    sh 'cd ./docker/NZBTests && docker-compose up -d'
   }
     }
     stage('Get Environment Info') {
