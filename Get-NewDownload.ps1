@@ -1,4 +1,4 @@
-<#
+﻿<#
 .Synopsis
    NewzNab Automation tool
 .DESCRIPTION
