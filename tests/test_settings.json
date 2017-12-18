@@ -1,0 +1,33 @@
+﻿{
+    "PushAuthToken": "Blah",
+    "GeekURL": "https://api.nzbgeek.info/",
+    "GeekKey": "lksbndkfjbsdbjbdsjbn",
+    "SabUrl": "http://localhost:8080",
+    "SabKey": "dsgrhrewhr",
+    "SonarrURL": "http://localhost:8989",
+    "SonarrKey": "sdge4w5g4",
+    "rootFolderPath": "C:\\Media",
+    "CouchURL": "http://localhost:5050",
+    "couchKey": "ygvjhvsdi",
+    "CouchAPIKey": "ygvjhvsdi",
+    "omdbApiKey": "jkwebjtbnen",
+    "mailgunKey": "dnfsndgnoi43387",
+    "mailDomain": "email.com",
+    "mailRecipient1": "Test@email.com",
+    "mailRecipient2": "Test1@email.com",
+    "mailRecipients": [
+        "Test@email.com",
+        "Test1@email.com"
+    ],
+    "mailRecipientsForTest": [
+        "Test@email.com",
+        "Test1@email.com"
+    ],
+    "TVDBIDKey": "jbjbn35245",
+    "documentDBLocation": "C:\\DocumentDB",
+    "backupFolder": "E:\\Backups",
+    "DBLocation": "C:\\DocumentDB",
+    "slackChannel": "Piracy",
+    "settingsCreatedAt": "\/Date(1513612647369)\/",
+    "settingsLastModified": "\/Date(1513612647369)\/"
+}

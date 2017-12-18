@@ -59,4 +59,5 @@ class NzbSettingsObject {
     [string]$DBLocation
     [string]$slackChannel
     [datetime]$settingsCreatedAt
+    [datetime]$settingsLastModified
 }

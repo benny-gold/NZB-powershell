@@ -1,9 +1,8 @@
-NZB-Powershell
-==============
+# NZB-Powershell
 
 A bunch of powershell scripts to manipulate some common media automation Products
 
-Requirements
+## Requirements
 ------------
 
 You require some or all of the following applications & accounts:
@@ -30,10 +29,37 @@ You require some or all of the following applications & accounts:
 *   [TVDB Id](http://thetvdb.com/?tab=xml)
     * API key
 
-**Setup Secrets & Keys**
+### Setup Secrets & Keys
 
-Fill in the information in secretstemplate.txt and resave it as secrets.ps1 in the root directory.
+all Settings are optional. 
 
+If you have an old secrets.ps1, dot source it then run `New-NZBSettingsObject -InputType Legacy` to create the new settings object.
+
+To create a new settings object from scratch:
+
+```powershell
+New-NZBSettingsObject -PushAuthToken `
+        -GeekURL `
+        -GeekKey `
+        -SabUrl `
+        -SabKey `
+        -SonarrURL `
+        -SonarrKey `
+        -rootFolderPath `
+        -CouchURL `
+        -couchKey `
+        -CouchAPIKey <>`
+        -omdbApiKey <OMDB API Key> `
+        -mailgunKey <Mailgun API Key>`
+        -mailDomain <Mail Domain>`
+        -mailRecipient1 <First Mail Recipient>`
+        -mailRecipient2 <Second Mail Recipient> `
+        -TVDBIDKey <TVDBID API Keyt> `
+        -documentDBLocation <Document DB Location> `
+        -backupFolder `
+        -DBLocation `
+        -slackChannel <Channel to post Slack notifications to>
+```
 
 Usage
 =====
