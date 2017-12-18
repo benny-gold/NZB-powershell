@@ -1,4 +1,4 @@
-﻿<#
+<#
 .Synopsis
    NewzNab Automation tool
 .DESCRIPTION
@@ -72,7 +72,7 @@ Function Global:Get-NewDownload {
                 New-PushalotNotification -AuthorizationToken $PushAuthToken -Title $title -body $body
             }
             None {
-            Write-Host -ForegroundColor Green "$title `n`n$body"
+                Write-Host  "$title `n`n$body"
             }
             
         }        
@@ -163,19 +163,6 @@ Function Global:Get-NewDownload {
             # Check it's not already been snatched
        
             Write-Verbose "Item fits max size"
-
-            if (!(Test-SnatchStatus -guid $($SelectedDownload.guid) -documentDBLocation $documentDBLocation)) {
-                Write-Verbose "Item not snatched..."
-                try {
-                    # Create new snatch status Item
-                    $SelectedDownload | Add-Member -MemberType NoteProperty -Name snatchDate -Value ((Get-Date).ToString("dd/MM/yyyy HH:mm:ss"))
-
-                    Write-Verbose "-SabNZBdplus $sabUrl -APIKey $sabKey -sabCategory $sabCategory -NZBURL $($SelectedDownload.link)"
-                    $downloadAdd = Send-Download -SabNZBdplus $sabUrl -APIKey $sabKey -sabCategory $sabCategory -NZBURL $($SelectedDownload.link) 
-                    Send-GNDNotification -title "New result for *$searchString* Snatched" -Body "*Title:* $($SelectedDownload.title)`n*Published:* $($SelectedDownload.pubDate)`n*Size:* $($SelectedDownload.friendlySize)mb"
-                        
-                    $SelectedDownload | ConvertTo-Json | Out-File -FilePath "$documentDBLocation\$($SelectedDownload.guid).json"
-                }
 
             if (!(Test-SnatchStatus -guid $($SelectedDownload.guid) -documentDBLocation $documentDBLocation)) {
                 Write-Verbose "Item not snatched..."
