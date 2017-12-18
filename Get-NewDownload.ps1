@@ -73,7 +73,7 @@ Function Global:Get-NewDownload
             New-PushalotNotification -AuthorizationToken $PushAuthToken -Title $title -body $body
             }
             None {
-            Write-Host  "$title `n`n$body"
+            Write-Host -ForegroundColor Green "$title `n`n$body"
             }
             
         }        
@@ -208,7 +208,7 @@ Function Global:Get-NewDownload
                 $largePath = "$documentDBLocation\large\$($SelectedDownload.SearchString)_$($SelectedDownload.guid).json"
                 if(!(Test-Path $largePath))
                     {
-                    $SelectedDownload | ConvertTo-Json | Out-File -FilePath $largePath
+                    $SelectedDownload | ConvertTo-Json | Out-File -FilePath $largePath -Encoding utf8
                     }
                 return "Download cancelled due to being too large, It was $($SelectedDownload.FriendlySize)mb and the max is $maxSizeInBytes b"
                 }
