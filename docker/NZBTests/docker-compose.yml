@@ -1,0 +1,26 @@
+﻿version: '2'
+services:
+  sab:
+    image: "sabnzbd/sabnzbd"
+    ports:
+         - 8880:8080
+    volumes:
+         - ./sab:/datadir
+    cap_add:
+      - SYS_ADMIN
+      - DAC_READ_SEARCH
+  sonarr:
+    image: "linuxserver/sonarr"
+    ports:
+         - 8881:8989
+    volumes:
+         - ./sonarr:/config
+    cap_add:
+      - SYS_ADMIN
+      - DAC_READ_SEARCH
+  couchpotato:
+    image: "linuxserver/couchpotato"
+    ports:
+         - 8882:5050
+    volumes:
+         - ./couch:/config
