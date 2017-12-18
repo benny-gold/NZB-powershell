@@ -48,3 +48,5 @@ CouchPotato/settings.json
 test.html
 tests/here.xml
 .vscode/settings.json
+AdewaleSettings.config
+secrets.json
