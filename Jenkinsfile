@@ -68,13 +68,9 @@ pipeline {
   post {
     always {
       echo 'Build Finished!'
-      agent {
-        label 'docker-qa'
-        }
-        steps {
-          sh 'cd ./docker/NZBTests && docker-compose down'
-          }
-    
+      node ('docker-qa'){
+        sh 'cd ./docker/NZBTests && docker-compose down'
+      }
     }
     success {
       script {
