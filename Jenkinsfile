@@ -7,7 +7,7 @@ pipeline {
   }
   steps {
     cleanWs notFailBuild: true
-    checkout([$class: 'GitSCM', doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[]]])
+    checkout
     sh 'env'
     sh 'hostname'
     sh 'docker --version'
