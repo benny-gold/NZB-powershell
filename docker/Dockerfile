@@ -1,2 +1,2 @@
-﻿FROM microsoft/microsoft/powershell
+﻿FROM microsoft/powershell
 COPY ../ /NZB-Powershell
