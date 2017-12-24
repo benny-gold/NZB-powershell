@@ -7,7 +7,7 @@ pipeline {
   }
   steps {
     cleanWs notFailBuild: true
-    checkout
+    checkout scm
     sh 'env'
     sh 'hostname'
     sh 'docker --version'
