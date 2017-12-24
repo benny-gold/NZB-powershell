@@ -61,6 +61,7 @@ pipeline {
         archiveArtifacts(artifacts: '**', allowEmptyArchive: true, onlyIfSuccessful: true)
       }
     }
+  }
   environment {
     moduleGuid = '9b63ed1f-0459-4d44-9df6-d07c69be0895'
   }
@@ -73,8 +74,8 @@ pipeline {
         steps {
           sh 'cd ./docker/NZBTests && docker-compose down'
           }
+    
     }
-  }
     success {
       script {
         def status = 'Jobs a goodun'
