@@ -6,6 +6,8 @@ pipeline {
     label 'docker-qa'
   }
   steps {
+    cleanWs notFailBuild: true
+    checkout scm
     sh 'env'
     sh 'hostname'
     sh 'docker --version'
@@ -60,14 +62,6 @@ pipeline {
         archiveArtifacts(artifacts: '**', allowEmptyArchive: true, onlyIfSuccessful: true)
       }
     }
-    stage ('Tear down Docker') {
-        agent {
-    label 'docker-qa'
-  }
-  steps {
-    sh 'cd ./docker/NZBTests && docker-compose down'
-  }
-    }
   }
   environment {
     moduleGuid = '9b63ed1f-0459-4d44-9df6-d07c69be0895'
@@ -75,9 +69,10 @@ pipeline {
   post {
     always {
       echo 'Build Finished!'
-      
+      node ('docker-qa'){
+        sh 'cd ./docker/NZBTests && docker-compose down'
+      }
     }
-    
     success {
       script {
         def status = 'Jobs a goodun'
