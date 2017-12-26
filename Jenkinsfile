@@ -9,7 +9,7 @@ pipeline {
         powershell 'Get-ChildItem -recurse'
         powershell '$MyInvocation.MyCommand.Path'
         powershell '[Environment]::Is64BitProcess'
-        powershell 'Get-Variable -Name env*'
+        powershell 'Get-ChildItem Env:'
       }
     }
     stage('Get Secrets') {
