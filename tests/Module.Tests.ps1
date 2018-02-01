@@ -50,6 +50,24 @@ Describe "NZB-Powershell Module" {
         }
     }
 
+    Context 'Indentations' {
+
+        It "We use spaces in this town." {
+            $totalTabsCount = 0
+            Get-ChildItem -Recurse -Path "$here\.." -Include "*.ps*1" -Exclude "*NZB-Powershell.psd1" | %{
+                $fileName = $_.FullName
+                cat $_.FullName -Raw | Select-String "`t" | % {
+                    Write-Warning "There are tab in $fileName"
+                    $totalTabsCount++
+                }
+            }
+            $totalTabsCount | Should Be 0
+        }
+    }
+}
+
+
+
     Context "All Functions have Tests" {
         $functions = Get-ChildItem  -Path "$here\..\*-*.ps1" -Recurse -Exclude "**\powershell-notifications\*"
         foreach ($Function in $functions) {
